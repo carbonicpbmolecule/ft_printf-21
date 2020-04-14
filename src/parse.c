@@ -3,6 +3,12 @@
 static int			arg_type(char c) {
 	if (c == 'f')
 		return (F);
+	else if (c == 'x')
+		return (XS);
+	else if (c == 'X')
+		return (XL);
+	else if (c == 'o')
+		return (O);
 	return (0);
 }
 
@@ -11,9 +17,9 @@ static int			arg_size(const char *format) {
 	
 	size = 0;
 	while (size < ft_strlen(format))
-	{
+	{	
 		if (ft_strchr(TYPES, format[size]))
-			return (size + 1);
+			return (size + 1);	
 		size++;
 	}
 	return (0);
@@ -67,24 +73,26 @@ static int		arg_delimiter_pos(const char *format, int len) {
 	return (0);
 }
 
-argument	arg_parse(const char *format) {
-	argument		arg;
+argument	*arg_parse(const char *format) {
 	int				flags_offset;
+	argument		*arg;
 
-	arg.size = arg_size(format);
-	arg.delimiter = arg_delimiter_pos(format, arg.size);
+	arg = (argument *) malloc(sizeof(argument));
+	arg->size = arg_size(format);
+	if (!arg->size)
+		return (0);
+	arg->delimiter = arg_delimiter_pos(format, arg->size);
+	arg->afterpoint = arg_afterpoint(format, arg->delimiter);
+	arg->type = arg_type(*(format + arg->size - 1));
+	arg->field_filling = ' ';
+	arg->alignment = RIGHT;
+	arg->sign_display = 0;
+	arg->special = (char *)malloc(2);
 	
-	arg.afterpoint = arg_afterpoint(format, arg.delimiter);
-	arg.type = arg_type(*(format + arg.size - 1));
-	
-	arg.field_filling = ' ';
-	arg.alignment = RIGHT;
-	arg.sign_display = 0;
-	arg.special = (char *)malloc(2);
-	
-	flags_offset = parse_flags(format, &arg);
-	arg.field_size = arg_field_size(format + flags_offset + 1, arg.delimiter - \
-					flags_offset - 1, arg.size - flags_offset);
-	test_parse_flags2(arg);
+	flags_offset = parse_flags(format, arg);
+	arg->field_size = arg_field_size(format + flags_offset + 1, arg->delimiter \
+			- flags_offset - 1, arg->size - flags_offset);
+	// test_parse_flags2(arg);
+	// test_parse(arg);
 	return (arg);
 }
