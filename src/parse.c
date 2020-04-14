@@ -1,42 +1,42 @@
 #include "../inc/ft_printf.h"
 
-static int			arg_is_valid_type(char c) {
-	if (c == 'f' || c == 's' || c == 'p' || c == 'c')
-		return 1;
-	return 0;
-}
-
 static int			arg_type(char c) {
 	if (c == 'f')
-		return D;
-	return 0;
+		return (F);
+	return (0);
 }
 
 static int			arg_size(const char *format) {
-	int i = 0;
-
-	while (*format) {
-		if (arg_is_valid_type(*format))
-			return i+1;
-		i++;
-		format++;
+	size_t size;
+	
+	size = 0;
+	while (size < ft_strlen(format))
+	{
+		if (ft_strchr(TYPES, format[size]))
+			return (size + 1);
+		size++;
 	}
-	return 0;
+	return (0);
 }
 
-static int			arg_spaces(const char *format, int delimiter, int len) {
-	int i = 1;
-	int spaces = 0;
-	if (!delimiter)
-		delimiter = len - 1;
-	while (i < delimiter) {
+static int			arg_field_size(const char *format, int delimiter, int len) {
+	int i;
+	int spaces;
+
+	i = 0;
+	spaces = 0;
+	if (delimiter < 1)
+		delimiter = len - 2;
+	
+	while (i < delimiter)
+	{
 		if (ft_isdigit(format[i]))
 			spaces = spaces * 10 + (format[i] - '0');
 		else
-			return 0;
+			return (0);
 		i++;
 	}
-	return spaces;
+	return (spaces);
 }
 
 static int			arg_afterpoint(const char *format, int delimiter) {
@@ -45,14 +45,14 @@ static int			arg_afterpoint(const char *format, int delimiter) {
 	if (!delimiter)
 		return 6;
 	i = delimiter + 1;
-	while (!arg_is_valid_type(format[i])) {
+	while (!ft_strchr(TYPES, format[i])) {
 		if (ft_isdigit(format[i]))
 			afterpoint = afterpoint * 10 + (format[i] - '0');
 		else
-			return 0;
+			return (0);
 		i++; 
 	}
-	return afterpoint;
+	return (afterpoint);
 }
 
 static int		arg_delimiter_pos(const char *format, int len) {
@@ -64,17 +64,27 @@ static int		arg_delimiter_pos(const char *format, int len) {
 		}
 		i++;
 	}
-	return 0;
+	return (0);
 }
 
 argument	arg_parse(const char *format) {
 	argument		arg;
+	int				flags_offset;
 
 	arg.size = arg_size(format);
 	arg.delimiter = arg_delimiter_pos(format, arg.size);
-	arg.spaces = arg_spaces(format, arg.delimiter, arg.size);
+	
 	arg.afterpoint = arg_afterpoint(format, arg.delimiter);
 	arg.type = arg_type(*(format + arg.size - 1));
-
-	return arg;
+	
+	arg.field_filling = ' ';
+	arg.alignment = RIGHT;
+	arg.sign_display = 0;
+	arg.special = (char *)malloc(2);
+	
+	flags_offset = parse_flags(format, &arg);
+	arg.field_size = arg_field_size(format + flags_offset + 1, arg.delimiter - \
+					flags_offset - 1, arg.size - flags_offset);
+	test_parse_flags2(arg);
+	return (arg);
 }
