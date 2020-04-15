@@ -49,5 +49,6 @@ char		*ft_itoa_base(int value, int base, int radix_case);
 int			int_to_str(long x, char str[], int d, int sign);
 void		reverse_str(char *str, int len);
 long		ft_pow(int x, int y);
+double 		ft_round(double f, int aft);
 
 #endif

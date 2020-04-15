@@ -41,6 +41,13 @@ int		int_to_str(long int x, char *str, int d, int sign)
 	return i;
 }
 
+double ft_round(double f, int afterpoint) {
+	double div = ft_pow(10, afterpoint);
+	f *= div;
+	f += 0.5;
+	return f/div;
+}
+
 char	*ft_ftoa(double n, int afterpoint)
 {
 	char		*r;
@@ -48,6 +55,7 @@ char	*ft_ftoa(double n, int afterpoint)
 	int			sign = 0;
 	double		fpart;
 
+	n = ft_round(n, afterpoint);
 	if (n < 0) {
 		n = - n;
 		sign = 1;
@@ -55,9 +63,7 @@ char	*ft_ftoa(double n, int afterpoint)
 	ipart = (long int)n;
 	fpart = n - (double)ipart;
 	r = (char *)malloc(sizeof(char) * (ft_get_nb_size(ipart) + afterpoint + 2 + sign));
-
 	int		i = int_to_str(ipart, r, 0, sign);
-
 	if (afterpoint != 0) {
 		r[i] = '.';
 		fpart *= ft_pow(10, afterpoint);
