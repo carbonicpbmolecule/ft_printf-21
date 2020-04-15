@@ -16,6 +16,10 @@
 # define XS	105
 # define XL	106
 # define O	107
+# define S	108
+# define U	109
+# define P	110
+# define C	111
 # define TYPES "fcspdiouxX"
 
 # define RIGHT 1
@@ -30,6 +34,7 @@ typedef struct 	arg_params {
 	int			afterpoint;
 	char		alignment;
 	char		sign_display;
+	char		*modificator;
 	char		*special;
 	char		*data;
 }				argument;
@@ -39,9 +44,10 @@ int			ft_printf(const char *format, ...);
 // ARG PARSING
 argument	*arg_parse(const char *format);
 int			parse_flags(const char *format, argument *arg);
+char		*parse_modificator(argument *arg, const char *format);
 
 // TEST
-void test_parse_flags2(argument *arg);
+void test_parse_flags(argument *arg);
 void test_parse(argument *arg);
 
 char		*ft_ftoa(double n, int afterpoint);

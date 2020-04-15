@@ -44,11 +44,13 @@ void 			arg_free(argument *arg)
 		free(arg->special);
 	if (arg->data)
 		free(arg->data);
+	if (arg->modificator)
+		free(arg->modificator);
 	if (arg)
 		free(arg);
 }
 
-void	define_arg(va_list *args, argument *arg, const char *format)
+void	define_arg(va_list *args, argument *arg)
 {
 	if (arg->type == F)
 		arg->data = ft_ftoa(va_arg(*args, double), arg->afterpoint);
@@ -57,6 +59,21 @@ void	define_arg(va_list *args, argument *arg, const char *format)
 																XL ? 1 : 0);
 	else if (arg->type == O)
 		arg->data = ft_itoa_base(va_arg(*args, unsigned int), 8, 0);
+	else if (arg->type == U)
+		arg->data = ft_itoa(va_arg(*args, unsigned int));
+
+	else if (arg->type == D)
+		arg->data = ft_itoa(va_arg(*args, signed int));
+	else if (arg->type == I)
+		arg->data = ft_itoa(va_arg(*args, signed int));
+	else if (arg->type == S)
+		arg->data = va_arg(*args, char*);
+	else if (arg->type == C)
+	{
+		char i = va_arg(*args, unsigned int);
+		// printf("char = %c\n", i);
+		arg->data = ft_memset(ft_memalloc(4), i, 1);
+	}	
 	arg_print(arg);
 }
 
@@ -70,11 +87,13 @@ int 			ft_printf(const char *format, ...)
 	{
 		if (*format == '%' && (arg = arg_parse(format)))
 		{
-			define_arg(&args, arg, format);
+			define_arg(&args, arg);
 			format += arg->size;
 			arg_free(arg);
 		}
-		ft_putchar(*(format++));
+		else 
+			ft_putchar(*(format++));
 	}
 	va_end(args);
+	return (0);
 }
