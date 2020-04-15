@@ -9,6 +9,14 @@ static int			arg_type(char c) {
 		return (XL);
 	else if (c == 'o')
 		return (O);
+	else if (c == 'c')
+		return (C);
+	else if (c == 'u')
+		return (U);
+	else if (c == 's')
+		return (S);
+	else if (c == 'p')
+		return (P);	
 	return (0);
 }
 
@@ -92,7 +100,8 @@ argument	*arg_parse(const char *format) {
 	flags_offset = parse_flags(format, arg);
 	arg->field_size = arg_field_size(format + flags_offset + 1, arg->delimiter \
 			- flags_offset - 1, arg->size - flags_offset);
-	// test_parse_flags2(arg);
+	arg->modificator = parse_modificator(arg, format);
+	// test_parse_flags(arg);
 	// test_parse(arg);
 	return (arg);
 }
