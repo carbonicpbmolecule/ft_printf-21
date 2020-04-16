@@ -73,7 +73,10 @@ void	define_arg(va_list *args, argument *arg)
 		char i = va_arg(*args, unsigned int);
 		// printf("char = %c\n", i);
 		arg->data = ft_memset(ft_memalloc(4), i, 1);
-	}	
+	}
+	else if (arg->type == P) {
+		arg->data = ft_ptoa(va_arg(*args, unsigned long int));
+	}
 	arg_print(arg);
 }
 
