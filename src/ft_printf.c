@@ -55,6 +55,9 @@ void	define_arg(va_list *args, argument *arg)
 		handle_number(arg, args);
 	else if (arg->type == C || arg->type == S)
 		handle_chars(arg, args);
+	else if (arg->type == P) {
+		arg->data = ft_ptoa(va_arg(*args, unsigned long int));
+	}
 	arg_print(arg);
 }
 
