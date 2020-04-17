@@ -22,7 +22,7 @@ static void 	add_flags(argument *arg)
 }
 
 static void 	arg_print(argument *arg) {
-	int filling_size;
+	int		filling_size;
 
 	add_flags(arg);
 	filling_size = arg->field_size - ft_strlen(arg->data);
@@ -37,7 +37,7 @@ static void 	arg_print(argument *arg) {
 		ft_putstr(arg->data);
 }
 
-void 			arg_free(argument *arg)
+static void 	arg_free(argument *arg)
 {
 	if (arg->special)
 		free(arg->special);
@@ -49,7 +49,7 @@ void 			arg_free(argument *arg)
 		free(arg);
 }
 
-void	define_arg(va_list *args, argument *arg)
+static void		define_arg(va_list *args, argument *arg)
 {
 	if (arg->type >= F && arg->type <= U)
 		handle_number(arg, args);
@@ -71,6 +71,12 @@ int 			ft_printf(const char *format, ...)
 	{
 		if (*format == '%' && (arg = arg_parse(format)))
 		{
+			if (*(format + 1) == '%')
+			{
+				ft_putchar(*format);
+				format += 2;
+				continue;
+			}
 			define_arg(&args, arg);
 			format += arg->size;
 			arg_free(arg);

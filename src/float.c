@@ -1,20 +1,29 @@
 #include "../inc/ft_printf.h"
 
-long		ft_pow(int x, int y)
+static long			ft_pow(int x, int y)
 {
-	long result = x;
+	long result;
+	long div;
+
+	result = x;
 	if (!y)
-		return 1;
-	long div = result;
+		return (1);
+	div = result;
 	while (--y)
 		result *= div;
-	return result;
+	return (result);
 }
 
-void	reverse_str(char *str, int len)
+static void			reverse_str(char *str, int len)
 {
-	int i = 0, j = len - 1, tmp;
-	while (i < j) {
+	int 	i;
+	int		j;
+	int		tmp;
+	
+	i = 0;
+	j = len - 1;
+	while (i < j)
+	{
 		tmp = str[i];
 		str[i] = str[j];
 		str[j] = tmp;
@@ -23,12 +32,15 @@ void	reverse_str(char *str, int len)
 	}
 }
 
-int		int_to_str(long int x, char *str, int d, int sign)
+static int			int_to_str(long int x, char *str, int d, int sign)
 {
-	int i = 0;
+	int i;
+
+	i = 0;
 	if (x == 0)
 		str[i++] = '0';
-	while (x) {
+	while (x)
+	{
 		str[i++] = (x % 10) + '0';
 		x /= 10;
 	}
@@ -38,25 +50,29 @@ int		int_to_str(long int x, char *str, int d, int sign)
 		str[i++] = '-';
 	reverse_str(str, i);
 	str[i] = '\0';
-	return i;
+	return (i);
 }
 
-double ft_round(double f, int afterpoint) {
-	double div = ft_pow(10, afterpoint);
+static double		ft_round(double f, int afterpoint) {
+	double	div;
+	
+	div = ft_pow(10, afterpoint);
 	f *= div;
 	f += 0.5;
-	return f/div;
+	return (f / div);
 }
 
-char	*ft_ftoa(double n, int afterpoint)
+char				*ft_ftoa(double n, int afterpoint)
 {
 	char		*r;
 	long int	ipart;
-	int			sign = 0;
+	int			sign;
 	double		fpart;
 
 	n = ft_round(n, afterpoint);
-	if (n < 0) {
+	sign = 0;
+	if (n < 0)
+	{
 		n = - n;
 		sign = 1;
 	}
@@ -64,10 +80,11 @@ char	*ft_ftoa(double n, int afterpoint)
 	fpart = n - (double)ipart;
 	r = (char *)malloc(sizeof(char) * (ft_get_nb_size(ipart) + afterpoint + 2 + sign));
 	int		i = int_to_str(ipart, r, 0, sign);
-	if (afterpoint != 0) {
+	if (afterpoint != 0)
+	{
 		r[i] = '.';
 		fpart *= ft_pow(10, afterpoint);
 		int_to_str((long int)fpart, r + i + 1, afterpoint, 0);
 	}
-	return r;
+	return (r);
 }

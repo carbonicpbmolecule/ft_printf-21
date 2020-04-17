@@ -58,10 +58,13 @@ static int			arg_field_size(const char *format, int delimiter, int len) {
 }
 
 static int			arg_afterpoint(const char *format, int delimiter) {
-	int afterpoint = 0;
-	int i = 0;
+	int		afterpoint;
+	int 	i;
+
+	afterpoint = 0;
+	i = 0;
 	if (!delimiter)
-		return 6;
+		return (6);
 	i = delimiter + 1;
 	while (!ft_strchr(TYPES, format[i])) {
 		if (ft_isdigit(format[i]))
@@ -73,19 +76,20 @@ static int			arg_afterpoint(const char *format, int delimiter) {
 	return (afterpoint);
 }
 
-static int		arg_delimiter_pos(const char *format, int len) {
-	int i = 0;
-
+static int			arg_delimiter_pos(const char *format, int len) {
+	int		i;
+	
+	i = 0;
 	while (i < len) {
 		if (format[i] == '.') {
-			return i;
+			return (i);
 		}
 		i++;
 	}
 	return (0);
 }
 
-argument	*arg_parse(const char *format) {
+argument		*arg_parse(const char *format) {
 	int				flags_offset;
 	argument		*arg;
 

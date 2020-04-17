@@ -16,7 +16,7 @@ static char		*handle_unsigned(argument *arg, va_list *args)
 	else
 		base = 10;
 	if (ft_strequ(mod, "hh"))
-    	return (ft_ltoa_base((unsigned char)va_arg(*args, unsigned long int),\
+		return (ft_ltoa_base((unsigned char)va_arg(*args, unsigned long int),\
 															base, lcase));
 	else if (ft_strequ(mod, "h"))
 		return (ft_ltoa_base((unsigned short int)va_arg(*args, unsigned int),\
@@ -37,7 +37,7 @@ static char		*handle_signed(argument *arg, va_list *args)
 
 	mod = arg->modificator;
 	if (ft_strequ(mod, "hh"))
-    	return (ft_itoa_base((signed char)va_arg(*args, signed int), 10, 0));
+		return (ft_itoa_base((signed char)va_arg(*args, signed int), 10, 0));
 	else if (ft_strequ(mod, "h"))
 		return (ft_itoa_base((signed short int)va_arg(*args, signed int), \
 																		10, 0));
@@ -53,7 +53,7 @@ static char		*handle_signed(argument *arg, va_list *args)
 
 void			handle_number(argument *arg, va_list *args)
 {
-    if (arg->type == F)
+	if (arg->type == F)
 		arg->data = ft_ftoa(va_arg(*args, double), arg->afterpoint);
 	else if (arg->type >= XS && arg->type <= U)
 		arg->data = handle_unsigned(arg, args);

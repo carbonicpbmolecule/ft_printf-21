@@ -21,7 +21,7 @@ static int	valid_modificator(char *str)
 
 char		*parse_modificator(argument *arg, const char *format)
 {
-	char *mod;
+	char	*mod;
 
 	if (arg->size < 3)
 		return (0);

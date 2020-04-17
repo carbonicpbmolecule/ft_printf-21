@@ -26,10 +26,7 @@ static char		*handle_string(argument *arg, va_list *args)
 		arg->field_filling = ' ';
 	}
 	else if (arg->field_size <= 0 && data)
-	{
 		res = ft_strdup(data);
-		// arg->field_size = arg->field_size - ft_strlen(res);
-	}
 	else
 	{
 		res = ft_strdup("(none)");
