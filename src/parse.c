@@ -16,7 +16,11 @@ static int			arg_type(char c) {
 	else if (c == 's')
 		return (S);
 	else if (c == 'p')
-		return (P);	
+		return (P);
+	else if (c == 'd')
+		return (D);
+	else if (c == 'i');
+		return (I);	
 	return (0);
 }
 

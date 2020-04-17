@@ -5,6 +5,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <wchar.h>
 
 // SIGNED
 # define F	100
@@ -16,10 +17,10 @@
 # define XS	105
 # define XL	106
 # define O	107
-# define S	108
-# define U	109
-# define P	110
-# define C	111
+# define U	108
+# define P	109
+# define C	110
+# define S	111
 # define TYPES "fcspdiouxX"
 
 # define RIGHT 1
@@ -46,12 +47,15 @@ argument	*arg_parse(const char *format);
 int			parse_flags(const char *format, argument *arg);
 char		*parse_modificator(argument *arg, const char *format);
 
+void		handle_number(argument *arg, va_list *args);
+void		handle_chars(argument *arg, va_list *args);
+
 // TEST
 void test_parse_flags(argument *arg);
 void test_parse(argument *arg);
-
+char		*ft_ltoa_base(unsigned long long value, int base, int _radix_case);
 char		*ft_ftoa(double n, int afterpoint);
-char		*ft_itoa_base(int value, int base, int radix_case);
+char		*ft_itoa_base(long long value, int base, int radix_case);
 int			int_to_str(long x, char str[], int d, int sign);
 void		reverse_str(char *str, int len);
 long		ft_pow(int x, int y);

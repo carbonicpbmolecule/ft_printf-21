@@ -1,9 +1,9 @@
 #include "../inc/ft_printf.h"
 # define MODIFICATORS_LEN 5
 
-const char g_modificators[4][3] = {"hh", "h", "ll", "l"};
+const char 	g_modificators[4][3] = {"hh", "h", "ll", "l"};
 
-int		valid_modificator(char *str)
+static int	valid_modificator(char *str)
 {
 	size_t	i;
 
@@ -19,7 +19,7 @@ int		valid_modificator(char *str)
 	return (0);
 }
 
-char	*parse_modificator(argument *arg, const char *format)
+char		*parse_modificator(argument *arg, const char *format)
 {
 	char *mod;
 
@@ -36,12 +36,3 @@ char	*parse_modificator(argument *arg, const char *format)
 	free(mod);
 	return (0);
 }
-
-// int main()
-// {
-//     char *hh = "hh";
-//     char *invalid = "ww";
-
-//     printf("hh -> %d\n", valid_modificator(hh));
-//     printf("invalid -> %d\n", valid_modificator(invalid));
-// }

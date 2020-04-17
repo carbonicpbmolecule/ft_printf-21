@@ -23,7 +23,6 @@ static void 	add_flags(argument *arg)
 
 static void 	arg_print(argument *arg) {
 	int filling_size;
-	int special_size;
 
 	add_flags(arg);
 	filling_size = arg->field_size - ft_strlen(arg->data);
@@ -52,28 +51,10 @@ void 			arg_free(argument *arg)
 
 void	define_arg(va_list *args, argument *arg)
 {
-	if (arg->type == F)
-		arg->data = ft_ftoa(va_arg(*args, double), arg->afterpoint);
-	else if (arg->type == XS || arg->type == XL)
-		arg->data = ft_itoa_base(va_arg(*args, unsigned int), 16, arg->type == \
-																XL ? 1 : 0);
-	else if (arg->type == O)
-		arg->data = ft_itoa_base(va_arg(*args, unsigned int), 8, 0);
-	else if (arg->type == U)
-		arg->data = ft_itoa(va_arg(*args, unsigned int));
-
-	else if (arg->type == D)
-		arg->data = ft_itoa(va_arg(*args, signed int));
-	else if (arg->type == I)
-		arg->data = ft_itoa(va_arg(*args, signed int));
-	else if (arg->type == S)
-		arg->data = va_arg(*args, char*);
-	else if (arg->type == C)
-	{
-		char i = va_arg(*args, unsigned int);
-		// printf("char = %c\n", i);
-		arg->data = ft_memset(ft_memalloc(4), i, 1);
-	}	
+	if (arg->type >= F && arg->type <= U)
+		handle_number(arg, args);
+	else if (arg->type == C || arg->type == S)
+		handle_chars(arg, args);
 	arg_print(arg);
 }
 

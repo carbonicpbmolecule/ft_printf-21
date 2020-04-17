@@ -14,12 +14,12 @@
 #define RADIXLO "0123456789abcdef"
 #define RADIXHI "0123456789ABCDEF"
 
-char	*ft_itoa_base(long long int value, int base, int _radix_case)
+char	*ft_ltoa_base(unsigned long long int value, int base, int _radix_case)
 {
-	int					i;
-	long long int		n;
-	char				*s;
-	char				*hex;
+	int	                    i;
+	unsigned long long		n;
+	char					*s;
+	char					*hex;
 
 	i = (value < 0 && base == 10) ? 2 : 1;
 	n = value;
