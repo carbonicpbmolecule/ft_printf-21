@@ -46,6 +46,7 @@ int			ft_printf(const char *format, ...);
 argument	*arg_parse(const char *format);
 int			parse_flags(const char *format, argument *arg);
 char		*parse_modificator(argument *arg, const char *format);
+int			handle_invalid(const char *format, size_t *printed);
 
 void		handle_number(argument *arg, va_list *args);
 void		handle_chars(argument *arg, va_list *args);
@@ -56,10 +57,6 @@ void test_parse(argument *arg);
 char		*ft_ltoa_base(unsigned long long value, int base, int _radix_case);
 char		*ft_ftoa(double n, int afterpoint);
 char		*ft_itoa_base(long long value, int base, int radix_case);
-int			int_to_str(long x, char str[], int d, int sign);
-void		reverse_str(char *str, int len);
-long		ft_pow(int x, int y);
-double 		ft_round(double f, int aft);
 char		*ft_ptoa(unsigned long int address);
 
 #endif
