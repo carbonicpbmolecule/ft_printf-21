@@ -109,7 +109,5 @@ argument		*arg_parse(const char *format) {
 	arg->field_size = arg_field_size(format + flags_offset + 1, arg->delimiter \
 			- flags_offset - 1, arg->size - flags_offset);
 	arg->modificator = parse_modificator(arg, format);
-	// test_parse_flags(arg);
-	// test_parse(arg);
 	return (arg);
 }

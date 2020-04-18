@@ -1,11 +1,41 @@
-all:
-	gcc main.c src/*.c libft/libft.a -o ft_printf
+SRCS = 	\
+		flags.c \
+		float.c \
+		ft_itoa_base.c \
+		ft_ltoa_base.c \
+		ft_printf.c \
+		hadle_number.c \
+		handle_chars.c \
+		modificators.c \
+		parse.c \
+		pointer.c
 
-mod_tests:
-	gcc test/test.c src/*.c libft/libft.a -o mod_tests
+NAME = libftprintf.a
+CFLAGS = -Wall -Werror -Wextra
+
+OBJECTSFOLD = ./objs
+SRCSFOLD = ./src
+OBJECTFILES = $(SRCS:.c=.o)
+OBJECTS = $(patsubst %.o, $(OBJECTSFOLD)/%.o, $(OBJECTFILES))
+
+all: $(NAME)
+
+$(NAME): $(OBJECTSFOLD) $(OBJECTS)
+	@cp libft/libft.a .
+	@mv libft.a $(NAME)
+	ar rc $(NAME) $(OBJECTS)
+	ranlib $(NAME)
+
+$(OBJECTSFOLD)/%.o: $(SRCSFOLD)/%.c
+	gcc -c $^ -Iinc/ -o $@
+
+$(OBJECTSFOLD):
+	mkdir $(OBJECTSFOLD)
 
 clean:
-	rm -f ft_printf mod_tests
+	rm -rf $(OBJECTSFOLD)
 
-mod_tests_re: clean
-	gcc test/test.c src/*.c libft/libft.a -o mod_tests
+fclean: clean
+	rm -f $(NAME)
+
+re: fclean all
