@@ -1,37 +1,5 @@
 #include "../inc/ft_printf.h"
 
-static long			ft_pow(int x, int y)
-{
-	long result;
-	long div;
-
-	result = x;
-	if (!y)
-		return (1);
-	div = result;
-	while (--y)
-		result *= div;
-	return (result);
-}
-
-static void			reverse_str(char *str, int len)
-{
-	int 	i;
-	int		j;
-	int		tmp;
-	
-	i = 0;
-	j = len - 1;
-	while (i < j)
-	{
-		tmp = str[i];
-		str[i] = str[j];
-		str[j] = tmp;
-		i++;
-		j--;
-	}
-}
-
 static int			int_to_str(long int x, char *str, int d, int sign)
 {
 	int i;
@@ -48,7 +16,7 @@ static int			int_to_str(long int x, char *str, int d, int sign)
 		str[i++] = '0';
 	if (sign)
 		str[i++] = '-';
-	reverse_str(str, i);
+	ft_strrev(str, i);
 	str[i] = '\0';
 	return (i);
 }
