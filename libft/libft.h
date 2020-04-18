@@ -87,5 +87,7 @@ void				ft_swap(int *a, int *b);
 int					ft_isspace(int c);
 int					ft_get_nb_size(unsigned int nb);
 int					ft_count_words(const char *str, char c);
+long				ft_pow(double n, int pow);
+void				ft_strrev(char *str, int len);
 
 #endif

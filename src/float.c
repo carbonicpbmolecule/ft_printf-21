@@ -12,6 +12,7 @@
 
 #include "../inc/ft_printf.h"
 
+<<<<<<< HEAD
 static long			ft_pow(int x, int y)
 {
 	long result;
@@ -44,6 +45,8 @@ static void			reverse_str(char *str, int len)
 	}
 }
 
+=======
+>>>>>>> 39c097617c9ffa18eb0c0c03febb046d3d2ac13d
 static int			int_to_str(long int x, char *str, int d, int sign)
 {
 	int i;
@@ -60,7 +63,7 @@ static int			int_to_str(long int x, char *str, int d, int sign)
 		str[i++] = '0';
 	if (sign)
 		str[i++] = '-';
-	reverse_str(str, i);
+	ft_strrev(str, i);
 	str[i] = '\0';
 	return (i);
 }
