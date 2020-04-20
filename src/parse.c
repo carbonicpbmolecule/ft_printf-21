@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acyrenna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/18 13:01:20 by acyrenna          #+#    #+#             */
+/*   Updated: 2020/04/18 13:01:22 by acyrenna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/ft_printf.h"
 
-static int			arg_type(char c) {
+static int			arg_type(char c)
+{
 	if (c == 'f')
 		return (F);
 	else if (c == 'x')
@@ -19,25 +32,27 @@ static int			arg_type(char c) {
 		return (P);
 	else if (c == 'd')
 		return (D);
-	else if (c == 'i');
-		return (I);	
+	else if (c == 'i')
+		return (I);
 	return (0);
 }
 
-static int			arg_size(const char *format) {
+static int			arg_size(const char *format)
+{
 	size_t size;
-	
+
 	size = 0;
 	while (size < ft_strlen(format))
-	{	
+	{
 		if (ft_strchr(TYPES, format[size]))
-			return (size + 1);	
+			return (size + 1);
 		size++;
 	}
 	return (0);
 }
 
-static int			arg_field_size(const char *format, int delimiter, int len) {
+static int			arg_field_size(const char *format, int delimiter, int len)
+{
 	int i;
 	int spaces;
 
@@ -45,7 +60,6 @@ static int			arg_field_size(const char *format, int delimiter, int len) {
 	spaces = 0;
 	if (delimiter < 1)
 		delimiter = len - 2;
-	
 	while (i < delimiter)
 	{
 		if (ft_isdigit(format[i]))
@@ -57,54 +71,47 @@ static int			arg_field_size(const char *format, int delimiter, int len) {
 	return (spaces);
 }
 
-static int			arg_afterpoint(const char *format, int delimiter) {
+static int			arg_afterpoint(argument *arg, const char *format)
+{
 	int		afterpoint;
-	int 	i;
+	char	*delimiter;
+	int		i;
 
 	afterpoint = 0;
-	i = 0;
-	if (!delimiter)
-		return (6);
-	i = delimiter + 1;
-	while (!ft_strchr(TYPES, format[i])) {
+	delimiter = ft_strnchr(format, '.', arg->size-2);
+	if (delimiter)
+		arg->delimiter = ft_strlen(format) - ft_strlen(delimiter);
+	else
+		return (arg->type == F ? 6 : 0);
+	i = arg->delimiter + 1;
+	while (!ft_strchr(TYPES, format[i]))
+	{
 		if (ft_isdigit(format[i]))
 			afterpoint = afterpoint * 10 + (format[i] - '0');
 		else
 			return (0);
-		i++; 
+		i++;
 	}
+	if (!afterpoint)
+		return (-1);
 	return (afterpoint);
 }
 
-static int			arg_delimiter_pos(const char *format, int len) {
-	int		i;
-	
-	i = 0;
-	while (i < len) {
-		if (format[i] == '.') {
-			return (i);
-		}
-		i++;
-	}
-	return (0);
-}
-
-argument		*arg_parse(const char *format) {
+argument			*arg_parse(const char *format)
+{
 	int				flags_offset;
 	argument		*arg;
 
-	arg = (argument *) malloc(sizeof(argument));
+	arg = (argument *)malloc(sizeof(argument));
 	arg->size = arg_size(format);
 	if (!arg->size)
 		return (0);
-	arg->delimiter = arg_delimiter_pos(format, arg->size);
-	arg->afterpoint = arg_afterpoint(format, arg->delimiter);
 	arg->type = arg_type(*(format + arg->size - 1));
+	arg->afterpoint = arg_afterpoint(arg, format);
 	arg->field_filling = ' ';
 	arg->alignment = RIGHT;
 	arg->sign_display = 0;
-	arg->special = (char *)malloc(2);
-	
+	arg->special = ft_memalloc(2);
 	flags_offset = parse_flags(format, arg);
 	arg->field_size = arg_field_size(format + flags_offset + 1, arg->delimiter \
 			- flags_offset - 1, arg->size - flags_offset);

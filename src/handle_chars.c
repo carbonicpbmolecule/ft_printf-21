@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_chars.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acyrenna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/18 13:01:15 by acyrenna          #+#    #+#             */
+/*   Updated: 2020/04/18 13:01:17 by acyrenna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/ft_printf.h"
 
 static char		*handle_char(argument *arg, va_list *args)
 {
-	char 	*data;
+	char	*data;
 	char	c;
 
-	c = (char) va_arg(*args, int);
+	c = (char)va_arg(*args, int);
 	if (!c)
 		return (0);
 	data = ft_strnew(2);
@@ -20,12 +32,12 @@ static char		*handle_string(argument *arg, va_list *args)
 	char *res;
 
 	data = va_arg(*args, char*);
-	if (arg->field_size > 0 && data)
+	if (arg->afterpoint > 0 && data)
 	{
 		res = ft_strsub(data, 0, arg->afterpoint);
 		arg->field_filling = ' ';
 	}
-	else if (arg->field_size <= 0 && data)
+	else if (arg->afterpoint <= 0 && data)
 		res = ft_strdup(data);
 	else
 	{

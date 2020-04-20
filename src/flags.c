@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   flags.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acyrenna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/18 13:00:55 by acyrenna          #+#    #+#             */
+/*   Updated: 2020/04/18 13:01:00 by acyrenna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/ft_printf.h"
 
 static void		get_special_chars(char *prefix, int type)
@@ -12,7 +24,7 @@ static void		get_special_chars(char *prefix, int type)
 
 int				parse_flags(const char *format, argument *arg)
 {
-	int	 i;
+	int	i;
 
 	i = 0;
 	if (*format == '%')
@@ -20,12 +32,12 @@ int				parse_flags(const char *format, argument *arg)
 	while (i < arg->size)
 	{
 		if (!ft_strchr("#0-+ ", format[i]))
-			break;
+			break ;
 		if (format[i] == '#')
 			get_special_chars(arg->special, arg->type);
 		if (format[i] == '0')
-			arg->field_filling = arg->alignment == RIGHT ? '0': ' ';
-		if (format[i]== '-')
+			arg->field_filling = arg->alignment == RIGHT ? '0' : ' ';
+		if (format[i] == '-')
 		{
 			arg->alignment = LEFT;
 			arg->field_filling = ' ';
@@ -36,5 +48,5 @@ int				parse_flags(const char *format, argument *arg)
 			arg->sign_display = '+';
 		i++;
 	}
-	return i;
+	return (i);
 }

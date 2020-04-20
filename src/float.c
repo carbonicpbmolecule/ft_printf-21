@@ -12,41 +12,6 @@
 
 #include "../inc/ft_printf.h"
 
-<<<<<<< HEAD
-static long			ft_pow(int x, int y)
-{
-	long result;
-	long div;
-
-	result = x;
-	if (!y)
-		return (1);
-	div = result;
-	while (--y)
-		result *= div;
-	return (result);
-}
-
-static void			reverse_str(char *str, int len)
-{
-	int		i;
-	int		j;
-	int		tmp;
-
-	i = 0;
-	j = len - 1;
-	while (i < j)
-	{
-		tmp = str[i];
-		str[i] = str[j];
-		str[j] = tmp;
-		i++;
-		j--;
-	}
-}
-
-=======
->>>>>>> 39c097617c9ffa18eb0c0c03febb046d3d2ac13d
 static int			int_to_str(long int x, char *str, int d, int sign)
 {
 	int i;

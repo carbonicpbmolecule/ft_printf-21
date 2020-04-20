@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*																			*/
 /*														:::	  ::::::::   */
-/*   libft.h											:+:	  :+:	:+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*													+:+ +:+		 +:+	 */
 /*   By: jirwin <jirwin@student.42.fr>			  +#+  +:+	   +#+		*/
 /*												+#+#+#+#+#+   +#+		   */
 /*   Created: 2019/09/13 12:20:43 by jirwin			#+#	#+#			 */
-/*   Updated: 2019/09/19 12:39:18 by jirwin		   ###   ########.fr	   */
+/*   Updated: 2020/04/20 15:09:46 by acyrenna         ###   ########.fr       */
 /*																			*/
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ char				*ft_strcat(char *s1, const char *s2);
 char				*ft_strncat(char *s1, char *s2, size_t n);
 size_t				ft_strlcat(char *dest, const char *src, size_t size);
 char				*ft_strchr(const char *s, int c);
+char				*ft_strnchr(const char *s, int c, int len);
 char				*ft_strrchr(const char *s, int c);
 char				*ft_strstr(const char *s1, const char *s2);
 char				*ft_strnstr(const char *s1, const char *s2, size_t n);

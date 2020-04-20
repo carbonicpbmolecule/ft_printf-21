@@ -14,10 +14,12 @@ UTILS = write.c \
 
 NAME = libftprintf.a
 CFLAGS = -Wall -Werror -Wextra
+LIBFT = libft.a
 
 OBJECTSFOLD = ./objs
 UTILSFOLD = ./utils
 SRCSFOLD = ./src
+LIBFTFOLD = ./libft
 
 SOBJECTFILES = $(SRCS:.c=.o)
 UOBJECTFILES = $(UTILS:.c=.o)
@@ -26,7 +28,7 @@ UOBJECTS = $(patsubst %.o, $(OBJECTSFOLD)/%.o, $(UOBJECTFILES))
 
 all: $(NAME)
 
-$(NAME): $(OBJECTSFOLD) $(UOBJECTS) $(SOBJECTS)
+$(NAME): $(LIBFTFOLD)/$(LIBFT) $(OBJECTSFOLD) $(UOBJECTS) $(SOBJECTS)
 	@cp libft/libft.a .
 	@mv libft.a $(NAME)
 	ar rc $(NAME) $(SOBJECTS) $(UOBJECTS)
@@ -40,6 +42,10 @@ $(OBJECTSFOLD)/%.o: $(SRCSFOLD)/%.c
 
 $(OBJECTSFOLD):
 	mkdir $(OBJECTSFOLD)
+
+$(LIBFTFOLD)/$(LIBFT):
+	make -C $(LIBFTFOLD)
+	make clean -C $(LIBFTFOLD)
 
 clean:
 	rm -rf $(OBJECTSFOLD)
