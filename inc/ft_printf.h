@@ -22,6 +22,7 @@
 # define C	110
 # define S	111
 # define TYPES "fcspdiouxX"
+# define MODS "0.#+- "
 
 # define RIGHT 1
 # define LEFT  0
@@ -59,4 +60,8 @@ char		*ft_ftoa(double n, int afterpoint);
 char		*ft_itoa_base(long long value, int base, int radix_case);
 char		*ft_ptoa(unsigned long int address);
 
+
+//OUTPUT
+int			cputchar(char c);
+int			cputstr(const char *str);
 #endif
