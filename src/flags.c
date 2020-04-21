@@ -14,7 +14,7 @@
 
 static void		get_special_chars(char *prefix, int type)
 {
-	if (type == XS)
+	if (type == XS || type == P)
 		ft_strcpy(prefix, "0x");
 	else if (type == XL)
 		ft_strcpy(prefix, "0X");
@@ -33,18 +33,18 @@ int				parse_flags(const char *format, argument *arg)
 	{
 		if (!ft_strchr("#0-+ ", format[i]))
 			break ;
-		if (format[i] == '#')
+		if (format[i] == '#' || arg->type == P)
 			get_special_chars(arg->special, arg->type);
-		if (format[i] == '0')
+		if (format[i] == '0' && arg->type <= P)
 			arg->field_filling = arg->alignment == RIGHT ? '0' : ' ';
 		if (format[i] == '-')
 		{
 			arg->alignment = LEFT;
 			arg->field_filling = ' ';
 		}
-		if (format[i] == ' ')
+		if (format[i] == ' ' && arg->type <= D)
 			arg->sign_display = arg->sign_display ? '+' : ' ';
-		if (format[i] == '+')
+		if (format[i] == '+' && arg->type <= D)
 			arg->sign_display = '+';
 		i++;
 	}

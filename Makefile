@@ -6,7 +6,9 @@ SRCS = 	\
 		handle_chars.c \
 		modificators.c \
 		parse.c \
-		pointer.c
+		pointer.c \
+		print.c
+		
 
 UTILS = write.c \
 		ft_itoa_base.c \

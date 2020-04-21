@@ -41,7 +41,7 @@ static char		*handle_string(argument *arg, va_list *args)
 		res = ft_strdup(data);
 	else
 	{
-		res = ft_strdup("(none)");
+		res = ft_strdup("(null)");
 		arg->field_size = 0;
 	}
 	return (res);

@@ -111,6 +111,7 @@ argument			*arg_parse(const char *format)
 	arg->field_filling = ' ';
 	arg->alignment = RIGHT;
 	arg->sign_display = 0;
+	arg->data = 0;
 	arg->special = ft_memalloc(2);
 	flags_offset = parse_flags(format, arg);
 	arg->field_size = arg_field_size(format + flags_offset + 1, arg->delimiter \
