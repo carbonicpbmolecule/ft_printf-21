@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   ft_strlcat.c									   :+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: jirwin <jirwin@student.42.fr>			  +#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2019/09/16 14:21:05 by jirwin			#+#	#+#			 */
-/*   Updated: 2019/09/16 14:21:05 by jirwin		   ###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acyrenna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/21 13:16:46 by acyrenna          #+#    #+#             */
+/*   Updated: 2020/04/21 13:16:46 by acyrenna         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
@@ -19,7 +19,7 @@ size_t		ft_strlcat(char *dest, const char *src, size_t size)
 	size_t	rsl;
 
 	if (!src || !dest)
-		return 0;
+		return (0);
 	i = ft_strlen(dest);
 	rsl = ft_strlen(src);
 	j = 0;
