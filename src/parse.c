@@ -78,7 +78,7 @@ static int			arg_afterpoint(argument *arg, const char *format)
 	int		i;
 
 	afterpoint = 0;
-	delimiter = ft_strnchr(format, '.', arg->size-2);
+	delimiter = ft_strnchr(format, '.', arg->size - 2);
 	if (delimiter)
 		arg->delimiter = ft_strlen(format) - ft_strlen(delimiter);
 	else
