@@ -6,7 +6,6 @@ SRCS = 	\
 		handle_chars.c \
 		modificators.c \
 		parse.c \
-		pointer.c \
 		print.c
 		
 
@@ -47,12 +46,13 @@ $(OBJECTSFOLD):
 
 $(LIBFTFOLD)/$(LIBFT):
 	make -C $(LIBFTFOLD)
-	make clean -C $(LIBFTFOLD)
 
 clean:
 	rm -rf $(OBJECTSFOLD)
+	make clean -C $(LIBFTFOLD)
 
 fclean: clean
 	rm -f $(NAME)
+	make fclean -C $(LIBFTFOLD)
 
 re: fclean all

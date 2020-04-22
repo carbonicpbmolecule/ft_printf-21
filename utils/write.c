@@ -2,8 +2,6 @@
 
 int     cputchar(char c)
 {
-    if (!c)
-        return(0);
     if (c)
         write(1, &c, 1);
     return (c ? 1 : 0);

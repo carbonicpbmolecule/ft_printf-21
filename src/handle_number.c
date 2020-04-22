@@ -62,6 +62,8 @@ static char		*handle_signed(argument *arg, va_list *args)
 
 void			handle_number(argument *arg, va_list *args)
 {
+	char *tmp;
+
 	if (arg->type == F)
 		arg->data = ft_ftoa(va_arg(*args, double), arg->afterpoint);
 	else if (arg->type >= XS && arg->type <= U)
@@ -70,4 +72,11 @@ void			handle_number(argument *arg, va_list *args)
 		arg->data = handle_signed(arg, args);
 	if (ft_strequ(arg->data, "0") && arg->type != O)
 		arg->special[0] = '\0';
+	if (arg->data[0] == '-')
+	{
+		tmp = ft_strsub(arg->data, 1, ft_strlen(arg->data));
+		ft_strdel(&(arg->data));
+		arg->data = tmp;
+		arg->sign_display = '-';
+	}
 }
