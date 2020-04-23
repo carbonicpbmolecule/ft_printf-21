@@ -70,7 +70,7 @@ void			handle_number(argument *arg, va_list *args)
 		arg->data = handle_unsigned(arg, args);
 	else if (arg->type == D || arg->type == I)
 		arg->data = handle_signed(arg, args);
-	if (ft_strequ(arg->data, "0") && arg->type != O)
+	if (ft_strequ(arg->data, "0") && arg->afterpoint >= 0)
 		arg->special[0] = '\0';
 	if (arg->data[0] == '-')
 	{

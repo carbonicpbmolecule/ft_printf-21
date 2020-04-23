@@ -18,8 +18,6 @@ static char		*handle_char(argument *arg, va_list *args)
 	char	c;
 
 	c = (char)va_arg(*args, int);
-	if (!c)
-		return (0);
 	data = ft_strnew(2);
 	data[0] = c;
 	arg->field_filling = ' ';
@@ -37,8 +35,10 @@ static char		*handle_string(argument *arg, va_list *args)
 		res = ft_strsub(data, 0, arg->afterpoint);
 		arg->field_filling = ' ';
 	}
-	else if (arg->afterpoint <= 0 && data)
+	else if (arg->afterpoint == 0 && data)
 		res = ft_strdup(data);
+	else if (arg->afterpoint == -1)
+		res = ft_memalloc(1);
 	else
 	{
 		res = ft_strdup("(null)");

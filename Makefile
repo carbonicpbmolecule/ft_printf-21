@@ -6,14 +6,14 @@
 #    By: dderevyn <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/21 20:30:28 by dderevyn          #+#    #+#              #
-#    Updated: 2020/04/22 17:10:07 by acyrenna         ###   ########.fr        #
+#    Updated: 2020/04/23 18:26:27 by acyrenna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
 OBJS_DIR = .objects
-CC = gcc
+CC = clang
 CFLAGS = -Wall -Wextra -Werror
 RM = /bin/rm -rf
 
@@ -42,7 +42,8 @@ LIBFT_SRCS = 	ft_isdigit.c\
 				ft_memcpy.c\
 				ft_get_nb_size.c\
 				ft_putstr.c\
-				ft_putchar.c
+				ft_putchar.c\
+				ft_strtrim.c
 LIBFT_OBJS = $(LIBFT_SRCS:%.c=$(LIBFT_OBJS_DIR)/%.o)
 LIBFT_OBJS_DIR = $(OBJS_DIR)
 
@@ -58,7 +59,9 @@ PRINTF_SRCS =	ft_itoa_base.c\
 				handle_number.c\
 				modificators.c\
 				parse.c\
-				print.c
+				print.c\
+				undefined.c\
+				pointer.c
 PRINTF_OBJS = $(PRINTF_SRCS:%.c=$(PRINTF_OBJS_DIR)/%.o)
 PRINTF_OBJS_DIR = $(OBJS_DIR)
 
@@ -90,25 +93,8 @@ norm:
 	$(addprefix $(PRINTF_PATH),$(PRINTF_SRCS)) \
 	$(addprefix $(PRINTF_PATH),$(PRINTF_INCS))
 
-run:
-	@$(CC) $(CFLAGS) main.c libftprintf.a | cat -e
-	@./a.out || true
-	@$(RM) ./a.out
+test: all
+	@$(CC) -g src/* $(NAME) test/main.c -o mod
+	@./mod
 
-run_warn:
-	@$(CC) main.c libftprintf.a
-	@./a.out || true
-	@$(RM) ./a.out
-
-test: rmt
-	@mkdir -p test
-	@cp -rf $(LIBFT_PATH) test/$(LIBFT_PATH)
-	@cp -rf $(PRINTF_PATH) test/$(PRINTF_PATH)
-	@cp -rf author test/author
-	@cp -rf Makefile test/Makefile
-	@cd test && pwd | cut -c 17-44
-
-rmt:
-	@$(RM) test
-
-.PHONY: all clean fclean re norm run run_warn test rmt
+.PHONY: all clean fclean re norm test

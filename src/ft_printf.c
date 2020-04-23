@@ -27,7 +27,7 @@ static size_t	define_arg(va_list *args, argument *arg)
 	else if (arg->type == C || arg->type == S)
 		handle_chars(arg, args);
 	else if (arg->type == P)
-		arg->data = ft_ltoa_base(va_arg(*args, unsigned long long), 16, 0);
+		handle_pointer(arg, args);
 	return (arg_print(arg));
 }
 

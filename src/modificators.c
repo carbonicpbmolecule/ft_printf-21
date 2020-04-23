@@ -31,51 +31,6 @@ static int	valid_modificator(char *str)
 	return (0);
 }
 
-int			is_valid_modificator(char mod)
-{
-	if (ft_isdigit(mod) || ft_strchr(MODS, mod))
-		return (1);
-	return (0);
-}
-
-int			handle_percent(const char *format, size_t *printed)
-{
-	int	skipped;
-
-	skipped = 0;
-	if (!format || !*format)
-		return (0);
-	format += 1;
-	while (is_valid_modificator(*format))
-	{
-		skipped++;
-		format++;
-	}
-	if (*format == '%')
-	{
-		*printed += cputchar('%');
-		skipped++;
-	}
-	if (!skipped)
-		return (0);
-	return (skipped + 1);
-}
-
-int			handle_invalid(const char *format, size_t *printed)
-{
-	size_t	skipped;
-
-	skipped = 0;
-	if (*format == '%')
-		skipped = handle_percent(format, printed);
-	if (!skipped)
-	{
-		*printed += cputchar(*format);
-		skipped++;
-	}
-	return (skipped);
-}
-
 char		*parse_modificator(argument *arg, const char *format)
 {
 	char	*mod;

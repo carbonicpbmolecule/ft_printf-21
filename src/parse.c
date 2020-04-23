@@ -44,6 +44,8 @@ static int			arg_size(const char *format)
 	size = 0;
 	while (size < ft_strlen(format))
 	{
+		if (format[size] == '%' && size != 0)
+			return (0);
 		if (ft_strchr(TYPES, format[size]))
 			return (size + 1);
 		size++;
