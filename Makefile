@@ -6,7 +6,7 @@
 #    By: dderevyn <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/21 20:30:28 by dderevyn          #+#    #+#              #
-#    Updated: 2020/04/23 18:26:27 by acyrenna         ###   ########.fr        #
+#    Updated: 2020/04/24 20:32:14 by acyrenna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,9 @@ LIBFT_SRCS = 	ft_isdigit.c\
 				ft_get_nb_size.c\
 				ft_putstr.c\
 				ft_putchar.c\
-				ft_strtrim.c
+				ft_strtrim.c\
+				ft_atoi.c\
+				ft_isspace.c
 LIBFT_OBJS = $(LIBFT_SRCS:%.c=$(LIBFT_OBJS_DIR)/%.o)
 LIBFT_OBJS_DIR = $(OBJS_DIR)
 

@@ -53,26 +53,6 @@ static int			arg_size(const char *format)
 	return (0);
 }
 
-static int			arg_field_size(const char *format, int delimiter, int len)
-{
-	int i;
-	int spaces;
-
-	i = 0;
-	spaces = 0;
-	if (delimiter < 1)
-		delimiter = len - 2;
-	while (i < delimiter)
-	{
-		if (ft_isdigit(format[i]))
-			spaces = spaces * 10 + (format[i] - '0');
-		else
-			return (0);
-		i++;
-	}
-	return (spaces);
-}
-
 static int			arg_afterpoint(argument *arg, const char *format)
 {
 	int		afterpoint;
@@ -107,7 +87,10 @@ argument			*arg_parse(const char *format)
 	arg = (argument *)malloc(sizeof(argument));
 	arg->size = arg_size(format);
 	if (!arg->size)
+	{
+		ft_memdel((void **)&arg);
 		return (0);
+	}
 	arg->type = arg_type(*(format + arg->size - 1));
 	arg->afterpoint = arg_afterpoint(arg, format);
 	arg->field_filling = ' ';
@@ -116,8 +99,7 @@ argument			*arg_parse(const char *format)
 	arg->data = 0;
 	arg->special = ft_memalloc(2);
 	flags_offset = parse_flags(format, arg);
-	arg->field_size = arg_field_size(format + flags_offset + 1, arg->delimiter \
-			- flags_offset - 1, arg->size - flags_offset);
+	arg->field_size = ft_atoi(format + 1 + flags_offset);
 	arg->modificator = parse_modificator(arg, format);
 	return (arg);
 }
