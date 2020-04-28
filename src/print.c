@@ -16,13 +16,10 @@ static void		handle_right(argument *arg, size_t *printed, char *field)
 {
 	if (arg->field_filling == ' ' && field)
 		*printed += cputstr(field);
-	if (arg->afterpoint >= 0)
-	{
-		if (arg->sign_display)
-			*printed += cputchar(arg->sign_display);
-		if (arg->special)
-			*printed += cputstr(arg->special);
-	}
+	if (arg->sign_display)
+		*printed += cputchar(arg->sign_display);
+	if (arg->special && arg->afterpoint >= 0)
+		*printed += cputstr(arg->special);
 	else if (arg->type == O && arg->special)
 		*printed += cputstr(arg->special);
 	if (arg->field_filling == '0' && field)
@@ -43,13 +40,13 @@ static void		handle_left(argument *arg, size_t *printed, char *field)
 		if (arg->special)
 			*printed += cputstr(arg->special);
 		*printed += cputstr(arg->data);
+		if (arg->type == C && arg->data[0] == '\0')
+			*printed += cputchar(0);
 	}
 	else if (arg->type == O && arg->special)
 		*printed += cputstr(arg->special);
 	if (field)
 		*printed += cputstr(field);
-	if (arg->type == C && arg->data[0] == '\0')
-		*printed += cputchar(0);
 	ft_strdel(&field);
 }
 
@@ -64,16 +61,21 @@ static int		define_precision(argument *arg)
 	data_len = ft_strlen(arg->data);
 	precision = arg->afterpoint - data_len - (arg->type == O ? \
 											ft_strlen(arg->special) : 0);
-	if (arg->type >= F && arg->type <= U)
+	if ((arg->type >= F && arg->type <= U) || arg->type == P)
+	{
 		if (precision > 0)
 		{
-			data = ft_memset(ft_memalloc(precision), '0', precision + data_len);
+			data = ft_memalloc(precision + data_len + 1);
+			ft_memset(data, '0', precision + data_len);
 			ft_memmove(data + precision, arg->data, data_len);
 			ft_strdel(&(arg->data));
 			arg->data = data;
 			arg->field_filling = ' ';
 			return (precision);
 		}
+		else if (arg->afterpoint > 0)
+			arg->field_filling = ' ';
+	}
 	return (0);
 }
 
@@ -89,7 +91,8 @@ size_t			arg_print(argument *arg)
 	fillsize = arg->field_size - ft_strlen(arg->data) - ft_strlen(arg->special)\
 	- (arg->sign_display ? 1 : 0) - (arg->type == C && !(*arg->data)? 1 : 0);
 	if (fillsize > 0)
-		field = ft_memset(ft_memalloc(fillsize), arg->field_filling, fillsize);
+		field = ft_memset(ft_memalloc(fillsize + 1), arg->field_filling, \
+																	fillsize);
 	if (arg->alignment == RIGHT)
 		handle_right(arg, &printed, field);
 	else

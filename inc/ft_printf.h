@@ -22,7 +22,7 @@
 # define C	110
 # define S	111
 # define TYPES "fcspdiouxX"
-# define MODS "0.#+- "
+# define FLAGS "0.#+- "
 
 # define RIGHT 1
 # define LEFT  0
@@ -49,6 +49,7 @@ argument	*arg_parse(const char *format);
 size_t		arg_print(argument *arg);
 int			parse_flags(const char *format, argument *arg);
 char		*parse_modificator(argument *arg, const char *format);
+int			valid_modificator(const char *str);
 int			handle_invalid(const char *format, size_t *printed);
 void		handle_pointer(argument *arg, va_list *args);
 void		handle_number(argument *arg, va_list *args);

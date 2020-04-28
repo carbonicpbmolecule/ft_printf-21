@@ -15,7 +15,7 @@
 
 const char g_modificators[4][3] = {"hh", "h", "ll", "l"};
 
-static int	valid_modificator(char *str)
+int	valid_modificator(const char *str)
 {
 	size_t	i;
 

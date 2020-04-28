@@ -33,7 +33,7 @@ int				parse_flags(const char *format, argument *arg)
 	{
 		if (!ft_strchr("#0-+ ", format[i]))
 			break ;
-		if (format[i] == '#' || arg->type == P)
+		if ((format[i] == '#' || arg->type == P))
 			get_special_chars(arg->special, arg->type);
 		if (format[i] == '0' && arg->type <= P)
 			arg->field_filling = arg->alignment == RIGHT ? '0' : ' ';

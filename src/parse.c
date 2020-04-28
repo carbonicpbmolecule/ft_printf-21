@@ -56,27 +56,17 @@ static int			arg_size(const char *format)
 static int			arg_afterpoint(argument *arg, const char *format)
 {
 	int		afterpoint;
+	int		offset;
 	char	*delimiter;
-	int		i;
 
 	afterpoint = 0;
 	delimiter = ft_strnchr(format, '.', arg->size - 2);
 	if (delimiter)
-		arg->delimiter = ft_strlen(format) - ft_strlen(delimiter);
+		offset = ft_strlen(format) - ft_strlen(delimiter);
 	else
 		return (arg->type == F ? 6 : 0);
-	i = arg->delimiter + 1;
-	while (!ft_strchr(TYPES, format[i]))
-	{
-		if (ft_isdigit(format[i]))
-			afterpoint = afterpoint * 10 + (format[i] - '0');
-		else
-			return (0);
-		i++;
-	}
-	if (!afterpoint)
-		return (-1);
-	return (afterpoint);
+	offset = ft_atoi(format + offset + 1);
+	return (offset ? offset : -1);
 }
 
 argument			*arg_parse(const char *format)
@@ -101,5 +91,7 @@ argument			*arg_parse(const char *format)
 	flags_offset = parse_flags(format, arg);
 	arg->field_size = ft_atoi(format + 1 + flags_offset);
 	arg->modificator = parse_modificator(arg, format);
+	if ((arg->type == XS || arg->type == XL) && arg->afterpoint == -1)
+		ft_bzero(arg->special, 2);
 	return (arg);
 }

@@ -2,7 +2,7 @@
 
 int			is_valid_modificator(char mod)
 {
-	if (ft_isdigit(mod) || ft_strchr(MODS, mod))
+	if (ft_isdigit(mod) || ft_strchr(FLAGS, mod))
 		return (1);
 	return (0);
 }

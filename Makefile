@@ -6,7 +6,7 @@
 #    By: dderevyn <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/21 20:30:28 by dderevyn          #+#    #+#              #
-#    Updated: 2020/04/24 20:32:14 by acyrenna         ###   ########.fr        #
+#    Updated: 2020/04/28 15:52:10 by acyrenna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,6 +83,8 @@ $(PRINTF_OBJS_DIR)/%.o: $(PRINTF_PATH)%.c
 
 clean:
 	$(RM) $(OBJS_DIR)
+	$(RM) peda*
+	$(RM) mod
 
 fclean: clean
 	$(RM) $(NAME)
