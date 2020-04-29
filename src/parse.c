@@ -53,7 +53,7 @@ static int			arg_size(const char *format)
 	return (0);
 }
 
-static int			arg_afterpoint(argument *arg, const char *format)
+static int			arg_afterpoint(t_argument *arg, const char *format)
 {
 	int		afterpoint;
 	int		offset;
@@ -69,12 +69,12 @@ static int			arg_afterpoint(argument *arg, const char *format)
 	return (offset ? offset : -1);
 }
 
-argument			*arg_parse(const char *format)
+t_argument			*arg_parse(const char *format)
 {
 	int				flags_offset;
-	argument		*arg;
+	t_argument		*arg;
 
-	arg = (argument *)malloc(sizeof(argument));
+	arg = (t_argument *)malloc(sizeof(t_argument));
 	arg->size = arg_size(format);
 	if (!arg->size)
 	{

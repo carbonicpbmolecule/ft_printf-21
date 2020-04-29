@@ -6,7 +6,7 @@
 /*   By: acyrenna <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/18 13:01:17 by acyrenna          #+#    #+#             */
-/*   Updated: 2020/04/18 16:16:00 by acyrenna         ###   ########.fr       */
+/*   Updated: 2020/04/29 20:15:28 by acyrenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 const char g_modificators[4][3] = {"hh", "h", "ll", "l"};
 
-int	valid_modificator(const char *str)
+int		valid_modificator(const char *str)
 {
 	size_t	i;
 
@@ -31,7 +31,7 @@ int	valid_modificator(const char *str)
 	return (0);
 }
 
-char		*parse_modificator(argument *arg, const char *format)
+char	*parse_modificator(t_argument *arg, const char *format)
 {
 	char	*mod;
 

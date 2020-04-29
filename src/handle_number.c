@@ -13,7 +13,7 @@
 #include "../inc/ft_printf.h"
 #include <wchar.h>
 
-static char		*handle_unsigned(argument *arg, va_list *args)
+static char		*handle_unsigned(t_argument *arg, va_list *args)
 {
 	int		base;
 	int		lcase;
@@ -40,7 +40,7 @@ static char		*handle_unsigned(argument *arg, va_list *args)
 		return (ft_ltoa_base(va_arg(*args, unsigned int), base, lcase));
 }
 
-static char		*handle_signed(argument *arg, va_list *args)
+static char		*handle_signed(t_argument *arg, va_list *args)
 {
 	char	*mod;
 
@@ -60,7 +60,7 @@ static char		*handle_signed(argument *arg, va_list *args)
 		return (ft_itoa_base(va_arg(*args, signed int), 10, 0));
 }
 
-void			handle_number(argument *arg, va_list *args)
+void			handle_number(t_argument *arg, va_list *args)
 {
 	char *tmp;
 

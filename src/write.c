@@ -6,7 +6,7 @@
 /*   By: acyrenna <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/22 17:21:21 by acyrenna          #+#    #+#             */
-/*   Updated: 2020/04/22 17:21:39 by acyrenna         ###   ########.fr       */
+/*   Updated: 2020/04/29 20:14:55 by acyrenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int		cputstr(const char *str)
 {
 	if (!str)
 		return (0);
-
 	ft_putstr(str);
-	return(ft_strlen(str));
+	return (ft_strlen(str));
 }

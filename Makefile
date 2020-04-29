@@ -6,7 +6,7 @@
 #    By: dderevyn <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/21 20:30:28 by dderevyn          #+#    #+#              #
-#    Updated: 2020/04/28 15:52:10 by acyrenna         ###   ########.fr        #
+#    Updated: 2020/04/29 20:26:35 by acyrenna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,11 +82,13 @@ $(PRINTF_OBJS_DIR)/%.o: $(PRINTF_PATH)%.c
 	$(CC) $(CFLAGS) -c $< $(addprefix -I.,$(addprefix $(PRINTF_PATH),$(PRINTF_INCS))) -o $@
 
 clean:
+	make clean -C libft/
 	$(RM) $(OBJS_DIR)
 	$(RM) peda*
 	$(RM) mod
 
 fclean: clean
+	make fclean -C libft/
 	$(RM) $(NAME)
 
 re: fclean all
@@ -95,7 +97,7 @@ norm:
 	@norminette $(addprefix $(LIBFT_PATH),$(LIBFT_SRCS)) \
 	$(addprefix $(LIBFT_PATH),$(LIBFT_INCS)) \
 	$(addprefix $(PRINTF_PATH),$(PRINTF_SRCS)) \
-	$(addprefix $(PRINTF_PATH),$(PRINTF_INCS))
+	$(PRINTF_INCS)
 
 test: all
 	@$(CC) -g src/* $(NAME) test/main.c -o mod

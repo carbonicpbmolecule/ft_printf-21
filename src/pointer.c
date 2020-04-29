@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pointer.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acyrenna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/29 20:14:35 by acyrenna          #+#    #+#             */
+/*   Updated: 2020/04/29 20:14:37 by acyrenna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/ft_printf.h"
 
-void		handle_pointer(argument *arg, va_list *args)
+void		handle_pointer(t_argument *arg, va_list *args)
 {
 	unsigned long long data;
 

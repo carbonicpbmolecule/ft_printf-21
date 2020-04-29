@@ -12,7 +12,7 @@
 
 #include "../inc/ft_printf.h"
 
-static char		*handle_char(argument *arg, va_list *args)
+static char		*handle_char(t_argument *arg, va_list *args)
 {
 	char	*data;
 	char	c;
@@ -24,7 +24,7 @@ static char		*handle_char(argument *arg, va_list *args)
 	return (data);
 }
 
-static char		*handle_string(argument *arg, va_list *args)
+static char		*handle_string(t_argument *arg, va_list *args)
 {
 	char *data;
 	char *res;
@@ -45,7 +45,7 @@ static char		*handle_string(argument *arg, va_list *args)
 	return (res);
 }
 
-void			handle_chars(argument *arg, va_list *args)
+void			handle_chars(t_argument *arg, va_list *args)
 {
 	if (arg->type == C)
 		arg->data = handle_char(arg, args);

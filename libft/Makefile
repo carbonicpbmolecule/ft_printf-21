@@ -31,10 +31,12 @@ OBJ=$(SRC:%.c=%.o)
 
 all: $(NAME)
 
-$(NAME): $(SRC) libft.h
-	gcc -Wall -Wextra -Werror -c $(SRC)
+$(NAME): $(OBJ) libft.h
 	ar rc $(NAME) $(OBJ)
 	ranlib $(NAME)
+
+%.o: %.c
+	gcc -c -Wall -Wextra -Werror $< -o $@
 
 clean:
 	rm -f $(OBJ)

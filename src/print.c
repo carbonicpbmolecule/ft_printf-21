@@ -6,13 +6,13 @@
 /*   By: acyrenna <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/22 17:12:41 by acyrenna          #+#    #+#             */
-/*   Updated: 2020/04/22 17:12:42 by acyrenna         ###   ########.fr       */
+/*   Updated: 2020/04/29 20:12:39 by acyrenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-static void		handle_right(argument *arg, size_t *printed, char *field)
+static void		handle_right(t_argument *arg, size_t *printed, char *field)
 {
 	if (arg->field_filling == ' ' && field)
 		*printed += cputstr(field);
@@ -31,7 +31,7 @@ static void		handle_right(argument *arg, size_t *printed, char *field)
 	ft_strdel(&field);
 }
 
-static void		handle_left(argument *arg, size_t *printed, char *field)
+static void		handle_left(t_argument *arg, size_t *printed, char *field)
 {
 	if (arg->afterpoint >= 0 || arg->field_size > 0)
 	{
@@ -50,7 +50,7 @@ static void		handle_left(argument *arg, size_t *printed, char *field)
 	ft_strdel(&field);
 }
 
-static int		define_precision(argument *arg)
+static int		define_precision(t_argument *arg)
 {
 	int		precision;
 	int		data_len;
@@ -79,7 +79,7 @@ static int		define_precision(argument *arg)
 	return (0);
 }
 
-size_t			arg_print(argument *arg)
+size_t			arg_print(t_argument *arg)
 {
 	int		fillsize;
 	char	*field;
@@ -89,7 +89,7 @@ size_t			arg_print(argument *arg)
 	field = 0;
 	define_precision(arg);
 	fillsize = arg->field_size - ft_strlen(arg->data) - ft_strlen(arg->special)\
-	- (arg->sign_display ? 1 : 0) - (arg->type == C && !(*arg->data)? 1 : 0);
+	- (arg->sign_display ? 1 : 0) - (arg->type == C && !(*arg->data) ? 1 : 0);
 	if (fillsize > 0)
 		field = ft_memset(ft_memalloc(fillsize + 1), arg->field_filling, \
 																	fillsize);

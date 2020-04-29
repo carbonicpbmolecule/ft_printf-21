@@ -22,7 +22,7 @@ static void		get_special_chars(char *prefix, int type)
 		ft_strcpy(prefix, "0");
 }
 
-int				parse_flags(const char *format, argument *arg)
+int				parse_flags(const char *format, t_argument *arg)
 {
 	int	i;
 

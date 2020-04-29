@@ -12,7 +12,7 @@
 
 #include "../inc/ft_printf.h"
 
-static void		arg_free(argument *arg)
+static void		arg_free(t_argument *arg)
 {
 	ft_strdel(&(arg->special));
 	ft_strdel(&(arg->data));
@@ -20,7 +20,7 @@ static void		arg_free(argument *arg)
 	ft_memdel((void **)&arg);
 }
 
-static size_t	define_arg(va_list *args, argument *arg)
+static size_t	define_arg(va_list *args, t_argument *arg)
 {
 	if (arg->type >= F && arg->type <= U)
 		handle_number(arg, args);
@@ -34,7 +34,7 @@ static size_t	define_arg(va_list *args, argument *arg)
 int				ft_printf(const char *format, ...)
 {
 	va_list		args;
-	argument	*arg;
+	t_argument	*arg;
 	size_t		printed;
 
 	va_start(args, format);
