@@ -13,6 +13,7 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 # include "../libft/libft.h"
+// # include "../larithmetic/inc/larithmetic.h"
 # include <stdarg.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -37,6 +38,17 @@
 # define RIGHT 1
 # define LEFT  0
 
+typedef union
+{
+	double d;
+	struct
+	{
+		unsigned long int mantissa	: 52;
+		unsigned short int exponent	: 11;
+		char sign					: 1;
+	} parts;
+} double_cast;
+
 typedef struct	s_arg_params
 {
 	int			size;
@@ -51,6 +63,17 @@ typedef struct	s_arg_params
 	char		*special;
 	char		*data;
 }				t_argument;
+
+unsigned short  		*write_long_int(unsigned long int n);
+unsigned short 			*write_double(double d, char flag);
+unsigned short	 		*pow_nb(unsigned short int nb, unsigned short int power);
+unsigned short 			*mult_nb(unsigned short int *a, unsigned short int *b);
+char 					*nbtoa(unsigned short int *r, int point);
+unsigned short  		getsize(unsigned long int n);
+void 					nbzero(unsigned short int *n, unsigned short int len);
+unsigned short int 		*add_nb(unsigned short int *a, unsigned short int *b);
+unsigned short 			*round_nb(unsigned short *n, int point, int afterpoint);
+void 					print432_nb(unsigned short int *r); /////////////////[f;seik]
 
 int				ft_printf(const char *format, ...);
 t_argument		*arg_parse(const char *format);

@@ -11,63 +11,22 @@
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
+#include <math.h>
 
-static int			int_to_str(long int x, char *str, int d, int sign)
-{
-	int	i;
+char *ft_ftoa(double n, int afterpoint) {
+	double_cast d;
+	d.d = n;
 
-	i = 0;
-	if (x == 0)
-		str[i++] = '0';
-	while (x)
-	{
-		str[i++] = (x % 10) + '0';
-		x /= 10;
-	}
-	while (i < d)
-		str[i++] = '0';
-	if (sign)
-		str[i++] = '-';
-	ft_strrev(str, i);
-	str[i] = '\0';
-	return (i);
-}
+	unsigned short *a = write_double(d.parts.mantissa / pow(2, 52), 1); // 1 || 0
+	unsigned short *b = pow_nb(2, d.parts.exponent - 1023); // b[0]
+	unsigned short *r = mult_nb(a, b);
+	// int point = b[0] + 1;
 
-static double		ft_round(double f, int afterpoint)
-{
-	double	div;
+	char *result = nbtoa(r, 0);
 
-	div = ft_pow(10, afterpoint);
-	f *= div;
-	f += 0.5;
-	return (f / div);
-}
-
-char				*ft_ftoa(double n, int afterpoint)
-{
-	char		*r;
-	long int	ipart;
-	int			sign;
-	double		fpart;
-	int			i;
-
-	n = ft_round(n, afterpoint);
-	sign = 0;
-	if (n < 0)
-	{
-		n = -n;
-		sign = 1;
-	}
-	ipart = (long int)n;
-	fpart = n - (double)ipart;
-	r = (char *)malloc(sizeof(char) * (ft_get_nb_size(ipart) + \
-														afterpoint + 2 + sign));
-	i = int_to_str(ipart, r, 0, sign);
-	if (afterpoint != 0)
-	{
-		r[i] = '.';
-		fpart *= ft_pow(10, afterpoint);
-		int_to_str((long int)fpart, r + i + 1, afterpoint, 0);
-	}
-	return (r);
+	free(a);
+	free(b);
+	free(r);
+	
+	return result;
 }
