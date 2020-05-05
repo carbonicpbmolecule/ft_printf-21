@@ -1,4 +1,4 @@
-#include "../inc/ft_printf.h"
+#include "ft_printf.h"
 #define RIGOR 8
 
 unsigned short int *write_long_int(unsigned long int n) {
