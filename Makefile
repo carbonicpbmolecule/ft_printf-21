@@ -6,7 +6,7 @@
 #    By: dderevyn <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/21 20:30:28 by dderevyn          #+#    #+#              #
-#    Updated: 2020/04/29 20:26:35 by acyrenna         ###   ########.fr        #
+#    Updated: 2020/05/05 19:53:24 by acyrenna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = libftprintf.a
 
 OBJS_DIR = .objects
 CC = clang
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Werror -Wextra 
 RM = /bin/rm -rf
 
 LIBFT_PATH = libft/
@@ -50,7 +50,7 @@ LIBFT_OBJS = $(LIBFT_SRCS:%.c=$(LIBFT_OBJS_DIR)/%.o)
 LIBFT_OBJS_DIR = $(OBJS_DIR)
 
 PRINTF_PATH = src/
-PRINTF_INCS =	./inc/ft_printf.h
+PRINTF_INCS =	ft_printf.h
 PRINTF_SRCS =	ft_itoa_base.c\
 				ft_ltoa_base.c\
 				write.c\
@@ -66,29 +66,32 @@ PRINTF_SRCS =	ft_itoa_base.c\
 				pointer.c
 PRINTF_OBJS = $(PRINTF_SRCS:%.c=$(PRINTF_OBJS_DIR)/%.o)
 PRINTF_OBJS_DIR = $(OBJS_DIR)
+PRINTF_INCS_DIR = inc
 
-all: $(NAME)
+all: $(OBJS_DIR) $(NAME)
 
 $(NAME): $(LIBFT_OBJS) $(PRINTF_OBJS)
-	@ar rc $(NAME) $^
-	@ranlib $(NAME)
+	ar rc $(NAME) $^
+	ranlib $(NAME)
 
 $(LIBFT_OBJS_DIR)/%.o: $(LIBFT_PATH)%.c
-	@mkdir -p $(LIBFT_OBJS_DIR)
-	$(CC) $(CFLAGS) -c $< $(addprefix -I.,$(addprefix $(LIBFT_PATH),$(LIBFT_INCS))) -o $@
+	$(CC) $(CFLAGS) -c $< -I$(LIBFT_PATH) -o $@
 
 $(PRINTF_OBJS_DIR)/%.o: $(PRINTF_PATH)%.c
-	@mkdir -p $(LIBFT_OBJS_DIR)
-	$(CC) $(CFLAGS) -c $< $(addprefix -I.,$(addprefix $(PRINTF_PATH),$(PRINTF_INCS))) -o $@
+	$(CC) $(CFLAGS) -c $< $(addprefix -I,$(PRINTF_INCS_DIR)) -o $@
+
+$(OBJS_DIR):
+	@mkdir -p $(OBJS_DIR)
+
 
 clean:
-	make clean -C libft/
+	@make clean -C libft/
 	$(RM) $(OBJS_DIR)
 	$(RM) peda*
 	$(RM) mod
 
 fclean: clean
-	make fclean -C libft/
+	@make fclean -C libft/
 	$(RM) $(NAME)
 
 re: fclean all
@@ -97,9 +100,9 @@ norm:
 	@norminette $(addprefix $(LIBFT_PATH),$(LIBFT_SRCS)) \
 	$(addprefix $(LIBFT_PATH),$(LIBFT_INCS)) \
 	$(addprefix $(PRINTF_PATH),$(PRINTF_SRCS)) \
-	$(PRINTF_INCS)
+	$(addprefix $(PRINTF_INCS_DIR), $(PRINTF_INCS))
 
-test: all
+test:
 	@$(CC) -g src/* $(NAME) test/main.c -o mod
 	@./mod
 

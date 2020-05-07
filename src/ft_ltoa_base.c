@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_printf.h"
+#include "ft_printf.h"
 #define RADIXLO "0123456789abcdef"
 #define RADIXHI "0123456789ABCDEF"
 

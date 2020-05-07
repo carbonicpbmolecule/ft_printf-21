@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_printf.h"
+#include "ft_printf.h"
 #define MODIFICATORS_LEN 5
 
 const char g_modificators[4][3] = {"hh", "h", "ll", "l"};

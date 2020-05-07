@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_printf.h"
+#include "ft_printf.h"
 #include <wchar.h>
 
 static char		*handle_unsigned(t_argument *arg, va_list *args)
