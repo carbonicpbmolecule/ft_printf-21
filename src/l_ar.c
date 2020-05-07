@@ -110,42 +110,24 @@ unsigned short *mult_nb(unsigned short int *a, unsigned short int *b)
 	return r;
 }
 
-// char *nbtoa(unsigned short int *r, int point, char sign) {
-// 	/*
-// 		0 1 2 3 4 5 6 7
-// 		1 2 3 4 . 5 6 \0
-
-// 		0 1 2 3 4 5 6 7 8 9
-// 		1 2 3 4 5 6 . 7 8 \0
-// 	*/
-// 	unsigned short int len = r[0]; // 19
-// 	// print432_nb(r);
-// 	// exit(1);
-// 	char *str = (char *)malloc(sizeof(char) * len + 1);
-
-// 	unsigned short int i = 0;
-// 	unsigned short int j = len;
-// 	str[len--] = 0;
-// 	while (i <= len) { // 
-// 		str[i++] = r[j--] + '0';
-// 	}
-// 	return str;
-// }
-
 char *nbtoa(unsigned short int *r, int point, char sign) {
-	
 	int res_len = r[0] + 2 + sign;
-	char *res = (char *)malloc(sizeof(char) * res_len + 1);
-	res[res_len] = 0;
+	char *res = (char *)malloc(sizeof(char) * res_len);
+
 	int i = 0;
 	int j = r[0];
 	if (sign == -1)
 		res[i++] = '-';
-	while (i <= res_len) {
-		if (i == point)
+	while (i < res_len) {
+		if (i == point) {
 			res[i++] = '.';
+			continue ;
+		}
 		res[i++] = r[j--] + '0';
 	}
+	res[res_len-1] = 0;
+	printf("%s\n", res);
+	exit(1);
 	return res;
 }
 

@@ -17,7 +17,25 @@ static double power_t(double x, long n) {
     if(n == 0) return 1.0;
     if(n < 0) return 1.0 / (x * power_t (1.0 / x, n + 1));
     return x * power_t(x, n - 1);
- }
+}
+
+int kek(unsigned short *a, unsigned short *b){
+	double n1 = (b[b[0]] * 1.0) + (b[b[0] - 1] * 0.1) + (b[b[0] - 2] * 0.01) + (b[b[0] - 3] * 0.001);
+
+	int n2 = 0;
+	int i = 0;
+	while (i < 3)
+		n2 = n2 * 10 + a[a[0] - i++];
+	int jdkds = n1 * n2;
+	i = 0;
+	while (jdkds) {
+		jdkds /= 10;
+		i++;
+	}
+	if (i > 3) 
+		return 1;
+	return 0;
+}
 
 char *ft_ftoa(double n, int afterpoint) {
 	double_cast d;
@@ -37,10 +55,16 @@ char *ft_ftoa(double n, int afterpoint) {
 	else {
 		part1 = pow_nb(2, d.parts.exponent - 1023);
 		point = part1[0];
-	}	// 1
-	// printf("%d\n", point);
-	// exit(1);
-	part2 = write_double(d.parts.mantissa / power_t(2, 52), 1); // 1 || 0
+	}
+
+	printf("part1:\n%f\n", power_t(2, d.parts.exponent-1023));
+	printf("part2:\n%f\n", d.parts.mantissa / power_t(2, 52) + 1.0); // 1
+
+	part2 = write_double(d.parts.mantissa / power_t(2, 52), 1);
+	if (kek(part1, part2))
+		point++;
+	
+	printf("point:\n%d\n\n", point);
 
 	result = mult_nb(part1, part2);
 	// int point = b[0] + 1;
