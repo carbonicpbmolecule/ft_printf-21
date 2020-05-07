@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-#include "../inc/ft_printf.h"
-#define RIGOR 32
-=======
 #include "ft_printf.h"
-#define RIGOR 8
->>>>>>> 625f3b67f644009705b6ab66ea99ba837f37d03b
+#define RIGOR 32
 
 unsigned short int *write_long_int(unsigned long int n) {
 	unsigned short int i = 1;

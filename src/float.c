@@ -31,25 +31,19 @@ char *ft_ftoa(double n, int afterpoint) {
 	
 	if (d.parts.exponent < 1023) {
 		power = power_t(2, d.parts.exponent - 1023);
-		part1 = write_double(power, 0, &point);
+		part1 = write_double(power, 0);
 		point = 1;
 	}
 	else {
 		part1 = pow_nb(2, d.parts.exponent - 1023);
 		point = part1[0];
 	}	// 1
-	printf("%d\n", point);
-	exit(1);
-	part2 = write_double(d.parts.mantissa / power_t(2, 52), 1, &point); // 1 || 0
+	// printf("%d\n", point);
+	// exit(1);
+	part2 = write_double(d.parts.mantissa / power_t(2, 52), 1); // 1 || 0
 
-<<<<<<< HEAD
 	result = mult_nb(part1, part2);
-=======
-	unsigned short *a = write_double(d.parts.mantissa / 4503599627370496, 1); // 1 || 0
-	unsigned short *b = pow_nb(2, d.parts.exponent - 1023); // b[0]
-	unsigned short *r = mult_nb(a, b);
 	// int point = b[0] + 1;
->>>>>>> 625f3b67f644009705b6ab66ea99ba837f37d03b
 
 	str = nbtoa(result, point, d.parts.sign);
 
