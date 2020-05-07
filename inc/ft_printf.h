@@ -66,9 +66,9 @@ typedef struct	s_arg_params
 
 unsigned short  		*write_long_int(unsigned long int n);
 unsigned short 			*write_double(double d, char flag);
-unsigned short	 		*pow_nb(unsigned short int nb, unsigned short int power);
+unsigned short 			*pow_nb(unsigned int nb, int power);
 unsigned short 			*mult_nb(unsigned short int *a, unsigned short int *b);
-char 					*nbtoa(unsigned short int *r, int point);
+char 					*nbtoa(unsigned short int *r, int point, char sign);
 unsigned short  		getsize(unsigned long int n);
 void 					nbzero(unsigned short int *n, unsigned short int len);
 unsigned short int 		*add_nb(unsigned short int *a, unsigned short int *b);

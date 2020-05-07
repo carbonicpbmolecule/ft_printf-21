@@ -1,5 +1,5 @@
 #include "../inc/ft_printf.h"
-#define RIGOR 8
+#define RIGOR 32
 
 unsigned short int *write_long_int(unsigned long int n) {
 	unsigned short int i = 1;
@@ -17,15 +17,26 @@ unsigned short int *write_long_int(unsigned long int n) {
 	return r;
 }
 
+unsigned short int getsize(unsigned long int n) {
+	unsigned short int size = 0;
+	while (n) {
+		n /= 10;
+		size++;
+	}
+	return size;
+}
+
 unsigned short *write_double(double d, char flag) {
-	unsigned long ipart = d;
-	double fpart = d - ipart;
+	unsigned long ipart = d; // 0.001015 -> 0
+	double fpart = d - ipart; // 0.001015
 
 	if (flag)
-		ipart++;
-	unsigned int ipart_len = getsize(ipart);
-	unsigned int res_len = ipart_len + RIGOR + 1;
+		ipart++;  // 0.001015
+	unsigned int ipart_len = getsize(ipart); // 0.001015
 
+	if (!ipart_len)
+		ipart_len = 1;
+	unsigned int res_len = ipart_len + RIGOR + 1;
 	unsigned short *res = (unsigned short *)malloc(sizeof(unsigned short) * res_len);
 	nbzero(res, res_len);
 
@@ -50,9 +61,9 @@ unsigned short *write_double(double d, char flag) {
 	return res;
 }
 
-unsigned short *pow_nb(unsigned short int nb, unsigned short int power) {
-	unsigned short int *res, *tmp;
-	unsigned short int *a;
+unsigned short *pow_nb(unsigned int nb, int power) {
+	unsigned short *res, *tmp;
+	unsigned short *a;
 
 	res = write_long_int(1);
 	if (power == 0)
@@ -82,6 +93,8 @@ unsigned short *mult_nb(unsigned short int *a, unsigned short int *b)
 		{
 			cr = a[i] * b[j];
 			k = i + j - 1;
+			if (cr == 0)
+				r[0] = k++;
 			while (cr)
 			{
 				cr = cr + r[k];
@@ -89,6 +102,7 @@ unsigned short *mult_nb(unsigned short int *a, unsigned short int *b)
 				cr /= 10;
 				(k > r[0]) ? r[0] = k++ : k++;
 			}
+			
 			j++;
 		}
 		i++;
@@ -96,36 +110,45 @@ unsigned short *mult_nb(unsigned short int *a, unsigned short int *b)
 	return r;
 }
 
-char *nbtoa(unsigned short int *r, int point) {
-	/*
-		0 1 2 3 4 5 6 7
-		1 2 3 4 . 5 6 \0
+// char *nbtoa(unsigned short int *r, int point, char sign) {
+// 	/*
+// 		0 1 2 3 4 5 6 7
+// 		1 2 3 4 . 5 6 \0
 
-		0 1 2 3 4 5 6 7 8 9
-		1 2 3 4 5 6 . 7 8 \0
-	*/
-	unsigned short int len = r[0]; // 19
-	// print432_nb(r);
-	// exit(1);
-	char *str = (char *)malloc(sizeof(char) * len + 1);
+// 		0 1 2 3 4 5 6 7 8 9
+// 		1 2 3 4 5 6 . 7 8 \0
+// 	*/
+// 	unsigned short int len = r[0]; // 19
+// 	// print432_nb(r);
+// 	// exit(1);
+// 	char *str = (char *)malloc(sizeof(char) * len + 1);
 
-	unsigned short int i = 0;
-	unsigned short int j = len;
-	str[len--] = 0;
-	while (i <= len) { // 
-		str[i++] = r[j--] + '0';
+// 	unsigned short int i = 0;
+// 	unsigned short int j = len;
+// 	str[len--] = 0;
+// 	while (i <= len) { // 
+// 		str[i++] = r[j--] + '0';
+// 	}
+// 	return str;
+// }
+
+char *nbtoa(unsigned short int *r, int point, char sign) {
+	
+	int res_len = r[0] + 2 + sign;
+	char *res = (char *)malloc(sizeof(char) * res_len + 1);
+	res[res_len] = 0;
+	int i = 0;
+	int j = r[0];
+	if (sign == -1)
+		res[i++] = '-';
+	while (i <= res_len) {
+		if (i == point)
+			res[i++] = '.';
+		res[i++] = r[j--] + '0';
 	}
-	return str;
+	return res;
 }
 
-unsigned short int getsize(unsigned long int n) {
-	unsigned short int size = 0;
-	while (n) {
-		n /= 10;
-		size++;
-	}
-	return size;
-}
 
 void nbzero(unsigned short int *n, unsigned short int len) {
 	unsigned  short int i = 0;
@@ -173,25 +196,25 @@ unsigned short int *add_nb(unsigned short int *a, unsigned short int *b) {
 	return res;
 }
 
-unsigned short *round_nb(unsigned short *n, int point, int afterpoint) {
-	afterpoint = (!afterpoint) ? 6 : afterpoint;
+// unsigned short *round_nb(unsigned short *n, int point, int afterpoint) {
+// 	afterpoint = (!afterpoint) ? 6 : afterpoint;
 
-	unsigned short int kek = n[0] - point - afterpoint;
-	unsigned short *r = (unsigned short *)malloc(sizeof(unsigned short) * point + afterpoint + 1);
+// 	unsigned short int kek = n[0] - point - afterpoint;
+// 	unsigned short *r = (unsigned short *)malloc(sizeof(unsigned short) * point + afterpoint + 1);
 
-	unsigned short *a = pow_nb(10, kek);
-	unsigned short *b = write_long_int(5);
-	unsigned short *r1 = mult_nb(a, b);
+// 	unsigned short *a = pow_nb(10, kek);
+// 	unsigned short *b = write_long_int(5);
+// 	unsigned short *r1 = mult_nb(a, b);
 
-	unsigned short *r2 = add_nb(n, r1);
-	free(a); free(b); free(r1); free(n);
+// 	unsigned short *r2 = add_nb(n, r1);
+// 	free(a); free(b); free(r1); free(n);
 
-	r[0] = point + afterpoint;
-	unsigned short i = r2[0];
-	unsigned short j = r[0];
-	while (j >= 1) {
-		r[j--] = r2[i--];
-	}
+// 	r[0] = point + afterpoint;
+// 	unsigned short i = r2[0];
+// 	unsigned short j = r[0];
+// 	while (j >= 1) {
+// 		r[j--] = r2[i--];
+// 	}
 
-	return r;
-}
+// 	return r;
+// }
