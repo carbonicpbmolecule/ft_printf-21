@@ -1,5 +1,5 @@
 #include "ft_printf.h"
-#define RIGOR 32
+#define RIGOR 30
 
 unsigned short int *write_long_int(unsigned long int n) {
 	unsigned short int i = 1;
@@ -123,15 +123,17 @@ char *nbtoa(unsigned short int *r, int point, char sign) {
 	if (s)
 		res[i++] = '-';
 	while (i < res_len) {
-		if (i == point) {
+		if (i == point + s) {
 			res[i++] = '.';
 			continue ;
+		}
+		if (i >= RIGOR) {
+			res[i++] = '0';
+			continue;
 		}
 		res[i++] = r[j--] + '0';
 	}
 	res[res_len-1] = 0;
-	printf("%s\n", res);
-	exit(1);
 	return res;
 }
 
@@ -156,62 +158,69 @@ void print432_nb(unsigned short int *r)
 	free(str);
 }
 
-unsigned short int *add_nb(unsigned short int *a, unsigned short int *b) {
-	unsigned short max = a[0];
-	unsigned short *res = (unsigned short *)malloc(sizeof(unsigned short) * max + 2);
+// unsigned short int *add_nb(unsigned short int *a, unsigned short int *b)
+// {
+// 	int max = (a[0] > b[0]) ? a[0] : b[0];
 
-	unsigned short c = 0;
-	int kd = 0;
-	for (int i = 0; i <= max; i++) {
-		if (i > b[0])
-			kd = 0;
-		else
-			kd = b[i];
-		c = c + a[i] + kd;
-		// a[i] = c % 10;
-		res[i] = c % 10;
-		c /= 10;
-	}
-	if (c > 0) {
-		max++;
-		// a[max] = c;
-		res[max];
-	}
-	res[0] = max;
+// 	int c = 0;
+// 	int kd = 0;
+// 	for (int i = 0; i < max; i++)
+// 	{
+// 		if (i > b[0])
+// 			kd = 0;
+// 		else
+// 			kd = b[0];
+// 		c = c + a[i] + kd;
+// 		a[i] = c % 10;
+// 		c = c / 10;
+// 	}
+// 	if (c>0)
+// 	{
+// 		max = max + 1;
+// 		a[max] = c;
+// 	}
+// 	a[0] = max;
+// 	return a;
+// 	// print432_nb(a);
+// 	// exit(1);
+// }
 
-	return res;
-}
 
-unsigned short *round_nb(unsigned short *n, int point, int afterpoint) {
-	afterpoint = (!afterpoint) ? 6 : afterpoint;
+// unsigned short *round_nb(unsigned short *n, int point, int afterpoint) {
+// 	afterpoint = (!afterpoint) ? 6 : afterpoint;
+// 	unsigned short *a, *b, *c, *b1, *a1;
 
-	unsigned short int kek = n[0] - point - afterpoint;
-	unsigned short *r = (unsigned short *)malloc(sizeof(unsigned short) * point + afterpoint + 1);
-	unsigned short *r2;
+// 	int kek = n[0] - point - afterpoint;
 
-	unsigned short *a = pow_nb(10, kek-1);
-	unsigned short *b = write_long_int(5);
-	unsigned short *r1 = mult_nb(a, b);
-	// printf("%d\n", n[kek]);
-	// print432_nb(n);
-	// ft_putchar('\n');
-	// print432_nb(a);
-	// ft_putchar('\n');
-	// print432_nb(b);
-	// ft_putchar('\n');
-	// exit(1);
-	if (n[kek] >= 5)
-		r2 = add_nb(n, r1);
-	else
-		r2 = n;
-	// free(a); free(b); free(r1); free(n);
+// 	a = cpy_nb(n);
+// 	// b = pow_nb(10, kek-1);
+// 	// c = add_nb(a, b);
+// 	print432_nb(a);
+// 	// printf("%d\n", a[0]);
+// 	ft_putchar('\n');
+// 	exit(1);
+	
+// 	// unsigned short *r = (unsigned short *)malloc(sizeof(unsigned short) * point + afterpoint + 1);
+// 	// unsigned short int kek = n[0] - point - afterpoint;
+// 	// unsigned short *r2;
 
-	r[0] = point + afterpoint;
-	unsigned short i = r2[0];
-	unsigned short j = r[0];
-	while (j >= 1) {
-		r[j--] = r2[i--];
-	}
+// 	// unsigned short *b = write_long_int(5);
+// 	// unsigned short *r1 = mult_nb(a, b);
 
-	return r;
-}
+// 	// if (n[kek] >= 5)
+// 	// 	add_interface(a, r1);
+// 	// 	// r2 = add_nb(n, r1);
+// 	// else
+// 	// 	r2 = n;
+
+// 	// r[0] = point + afterpoint;
+// 	// unsigned short i = r2[0];
+// 	// unsigned short j = r[0];
+// 	// while (j >= 1) {
+// 	// 	r[j--] = r2[i--];
+// 	// }
+
+// 	// return r;
+// }
+
+

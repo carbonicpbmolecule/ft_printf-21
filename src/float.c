@@ -28,10 +28,6 @@ int kek(unsigned short *a, unsigned short *b){
 	while (i < 2)
 		n2 = n2 * 10 + a[a[0] - i++];
 	jdkds = n1 * n2;
-	// printf("%f\n", n1);
-	// printf("%d\n", n2);
-	// exit(1);
-	// printf("%d\n", jdkds);
 
 	if (getsize(jdkds) > 2)
 		return 1;
@@ -44,6 +40,7 @@ char *ft_ftoa(double n, int afterpoint) {
 	unsigned short *part1;
 	unsigned short *part2;
 	unsigned short *result;
+	// unsigned short *final;
 	char *str;
 	double power;
 	int point = 0;
@@ -58,22 +55,12 @@ char *ft_ftoa(double n, int afterpoint) {
 		point = part1[0];
 	}
 
-	// printf("part1:\n%f\n", power_t(2, d.parts.exponent-1023));
-	// printf("part2:\n%f\n", d.parts.mantissa / power_t(2, 52) + 1.0); // 1
-
 	part2 = write_double(d.parts.mantissa / power_t(2, 52), 1);
 	if (kek(part1, part2))
 		point++;
-	
-	// printf("point:\n%d\n\n", point);
 
 	result = mult_nb(part1, part2);
-	// print432_nb(result);
-	// exit(1);
-	unsigned short *res22 = round_nb(result, point, afterpoint);
-	// int point = b[0] + 1;
 
-	str = nbtoa(res22, point, d.parts.sign);
-
+	str = nbtoa(result, point, d.parts.sign);
 	return str;
 }
