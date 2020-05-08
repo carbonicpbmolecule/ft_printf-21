@@ -189,11 +189,18 @@ unsigned short *round_nb(unsigned short *n, int point, int afterpoint) {
 	unsigned short *r = (unsigned short *)malloc(sizeof(unsigned short) * point + afterpoint + 1);
 	unsigned short *r2;
 
-	unsigned short *a = pow_nb(10, kek);
+	unsigned short *a = pow_nb(10, kek-1);
 	unsigned short *b = write_long_int(5);
 	unsigned short *r1 = mult_nb(a, b);
-
-	if (a[a[0]] >= 5)
+	// printf("%d\n", n[kek]);
+	// print432_nb(n);
+	// ft_putchar('\n');
+	// print432_nb(a);
+	// ft_putchar('\n');
+	// print432_nb(b);
+	// ft_putchar('\n');
+	// exit(1);
+	if (n[kek] >= 5)
 		r2 = add_nb(n, r1);
 	else
 		r2 = n;
