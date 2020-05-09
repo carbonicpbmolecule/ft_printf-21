@@ -189,25 +189,29 @@ unsigned short *cpy_nb(unsigned short *n)
 char *nbtoa1(unsigned short *c, int point, int afterpoint, int sgn)
 {
 	int final_len = point + 1 + afterpoint + sgn;
-	printf("%d : sign %d\n", final_len, sgn);
+	// printf("%d : sign %d\n", final_len, point + sgn);
 	char *final = (char *)malloc(sizeof(char) * final_len + 1);
 	final[final_len] = 0;
 	int i = 0;
 
 	int len = c[0];
+	int fl = final_len;
 	// printf("%d\n", c[len]);
-	show_mem_a(c, 0);
+	// show_mem_a(c, 0);
 	if (sgn)
-		final[i++] = '-';
-	while (i < final_len)
+		i++;
+	while (i < fl)
 	{
-		if (i == point)
-			final[i++] = '.';
+		if (i == point + sgn)
+			i++;
 		final[i++] = c[len--] + '0';
 	}
+	final[point + sgn] = '.';
+	if (sgn)
+		final[0] = '-';
 	
-	printf("%s\n", final);
-	exit(1);
+	// printf("%s\n%d\n", final, final_len);
+	return final;
 }
 
 char *round_nb(unsigned short *n, int point, int afterpoint, char sign)
