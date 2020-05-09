@@ -68,12 +68,15 @@ unsigned short  		*write_long_int(unsigned long int n);
 unsigned short 			*write_double(double d, char flag);
 unsigned short 			*pow_nb(unsigned int nb, int power);
 unsigned short 			*mult_nb(unsigned short int *a, unsigned short int *b);
+// unsigned short			*mult_nb(unsigned short int *a, unsigned short int *b, int *point);
 char 					*nbtoa(unsigned short int *r, int point, char sign);
 unsigned short  		getsize(unsigned long int n);
 void 					nbzero(unsigned short int *n, unsigned short int len);
 unsigned short int 		*add_nb(unsigned short int *a, unsigned short int *b, int *point);
 char					*round_nb(unsigned short *n, int point, int afterpoint, char sign);
 void 					print432_nb(unsigned short int *r); /////////////////[f;seik]
+void show_mem_a(unsigned short *a, int flag);
+unsigned short *cpy_nb(unsigned short *n);
 
 int				ft_printf(const char *format, ...);
 t_argument		*arg_parse(const char *format);

@@ -19,19 +19,33 @@ static double power_t(double x, long n) {
     return x * power_t(x, n - 1);
 }
 
-int kek(unsigned short *a, unsigned short *b){
-	double n1 = (b[b[0]] * 1.0) + (b[b[0] - 1] * 0.1) + (b[b[0] - 2] * 0.01) + (b[b[0] - 3] * 0.001);
+int kek(unsigned short *a, unsigned short *b, int flag)
+{
+	double n1;
+	int n1_int = 0;
+	if (flag)
+		n1 = (a[a[0]] * 1.0) + (a[a[0] - 1] * 0.1) + (a[a[0] - 2] * 0.01) + (a[a[0] - 3] * 0.001);
+	else
+	{
+		int i = a[0];
+		while (i > 0)
+			n1_int = n1_int * 10 + a[i--];
+		n1 = n1_int;
+	}
 
-	int n2 = 0;
-	int i = 0;
-	int jdkds = 0;
-	while (i < 2)
-		n2 = n2 * 10 + a[a[0] - i++];
-	jdkds = n1 * n2;
+	double n2 = (b[b[0]] * 1.0) + (b[b[0] - 1] * 0.1) + (b[b[0] - 2] * 0.01) + (b[b[0] - 3] * 0.001);
+	int point = 0;
 
-	if (getsize(jdkds) > 2)
+	int ipart = n1 * n2;
+
+	if (ipart == 0)
 		return 1;
-	return 0;
+	while (ipart)
+	{
+		ipart /= 10;
+		point++;
+	}
+	return point;
 }
 
 char *ft_ftoa(double n, int afterpoint) {
@@ -44,24 +58,26 @@ char *ft_ftoa(double n, int afterpoint) {
 	char *str;
 	double power;
 	int point = 0;
-	
-	if (d.parts.exponent < 1023) {
+	int flag = d.parts.exponent < 1023;
+	if (flag) {
 		power = power_t(2, d.parts.exponent - 1023);
 		part1 = write_double(power, 0);
-		point = 1;
 	}
 	else {
 		part1 = pow_nb(2, d.parts.exponent - 1023);
-		point = part1[0];
+		// show_mem_a(part1, 0);
 	}
 
 	part2 = write_double(d.parts.mantissa / power_t(2, 52), 1);
-	if (kek(part1, part2))
-		point++;
+
+	// show_mem_a(part1, 1);
+	// show_mem_a(part2, 0);
+
 
 	result = mult_nb(part1, part2);
+
+	// show_mem_a(result, 0);
+	point = kek(part1, part2, flag);
 	final = round_nb(result, point, afterpoint, d.parts.sign);
-	exit(1);
-	// str = nbtoa(result, point, d.parts.sign);
-	// return str;
+	return final;
 }
