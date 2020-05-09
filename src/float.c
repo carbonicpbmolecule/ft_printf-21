@@ -37,10 +37,10 @@ int kek(unsigned short *a, unsigned short *b){
 char *ft_ftoa(double n, int afterpoint) {
 	double_cast d;
 	d.d = n;
-	unsigned short *part1;
-	unsigned short *part2;
-	unsigned short *result;
-	// unsigned short *final;
+	unsigned short 	*part1;
+	unsigned short	*part2;
+	unsigned short 	*result;
+	char 			*final;
 	char *str;
 	double power;
 	int point = 0;
@@ -60,7 +60,8 @@ char *ft_ftoa(double n, int afterpoint) {
 		point++;
 
 	result = mult_nb(part1, part2);
-
-	str = nbtoa(result, point, d.parts.sign);
-	return str;
+	final = round_nb(result, point, afterpoint, d.parts.sign);
+	exit(1);
+	// str = nbtoa(result, point, d.parts.sign);
+	// return str;
 }

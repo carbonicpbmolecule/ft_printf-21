@@ -110,34 +110,6 @@ unsigned short *mult_nb(unsigned short int *a, unsigned short int *b)
 	return r;
 }
 
-char *nbtoa(unsigned short int *r, int point, char sign) {
-	char s = 0;
-	if (sign == -1)
-		s = 1;
-
-	int res_len = r[0] + 2 + s;
-	char *res = (char *)malloc(sizeof(char) * res_len);
-
-	int i = 0;
-	int j = r[0];
-	if (s)
-		res[i++] = '-';
-	while (i < res_len) {
-		if (i == point + s) {
-			res[i++] = '.';
-			continue ;
-		}
-		if (i >= RIGOR) {
-			res[i++] = '0';
-			continue;
-		}
-		res[i++] = r[j--] + '0';
-	}
-	res[res_len-1] = 0;
-	return res;
-}
-
-
 void nbzero(unsigned short int *n, unsigned short int len) {
 	unsigned  short int i = 0;
 	while (i < len)
@@ -158,69 +130,84 @@ void print432_nb(unsigned short int *r)
 	free(str);
 }
 
-// unsigned short int *add_nb(unsigned short int *a, unsigned short int *b)
-// {
-// 	int max = (a[0] > b[0]) ? a[0] : b[0];
+unsigned short int *add_nb(unsigned short int *a, unsigned short int *b, int *point) {
+	int max = (a[0] > b[0]) ? a[0] : b[0];
 
-// 	int c = 0;
-// 	int kd = 0;
-// 	for (int i = 0; i < max; i++)
-// 	{
-// 		if (i > b[0])
-// 			kd = 0;
-// 		else
-// 			kd = b[0];
-// 		c = c + a[i] + kd;
-// 		a[i] = c % 10;
-// 		c = c / 10;
-// 	}
-// 	if (c>0)
-// 	{
-// 		max = max + 1;
-// 		a[max] = c;
-// 	}
-// 	a[0] = max;
-// 	return a;
-// 	// print432_nb(a);
-// 	// exit(1);
-// }
+	int c = 0;
 
+	for (int i = 1; i <= max; i++)
+	{
+		c = c + a[i] + b[i];
+		a[i] = c % 10;
+		c = c / 10;
+	}
+	if (c > 0)
+	{
+		max = max + 1;
+		*point = *point + 1;
+		a[max] = c;
+	}
+	a[0] = max;
+	return a;
+}
 
-// unsigned short *round_nb(unsigned short *n, int point, int afterpoint) {
-// 	afterpoint = (!afterpoint) ? 6 : afterpoint;
-// 	unsigned short *a, *b, *c, *b1, *a1;
-
-// 	int kek = n[0] - point - afterpoint;
-
-// 	a = cpy_nb(n);
-// 	// b = pow_nb(10, kek-1);
-// 	// c = add_nb(a, b);
-// 	print432_nb(a);
-// 	// printf("%d\n", a[0]);
-// 	ft_putchar('\n');
-// 	exit(1);
+unsigned short *cpy_nb(unsigned short *n)
+{
+	int len = 100;
 	
-// 	// unsigned short *r = (unsigned short *)malloc(sizeof(unsigned short) * point + afterpoint + 1);
-// 	// unsigned short int kek = n[0] - point - afterpoint;
-// 	// unsigned short *r2;
+	unsigned short *a = (unsigned short *)malloc(sizeof(unsigned short) * len);
+	nbzero(a, len);
+	a[0] = n[0];
+	int j = 1;
+	int i = 1;
 
-// 	// unsigned short *b = write_long_int(5);
-// 	// unsigned short *r1 = mult_nb(a, b);
+	while (j <= n[0])
+		a[i++] = n[j++];
+	return a;
+}
 
-// 	// if (n[kek] >= 5)
-// 	// 	add_interface(a, r1);
-// 	// 	// r2 = add_nb(n, r1);
-// 	// else
-// 	// 	r2 = n;
+char *nbtoa1(unsigned short *c, int i, int point, int afterpoint, int sgn)
+{
+	int final_len = point + 1 + afterpoint + sgn;
+	char *final = (char *)malloc(sizeof(char) * final_len + 1);
+	int j = 0;
+	if (sgn)
+		final[j++] = '-';
+	while (j < final_len)
+	{
+		if (j == point + sgn)
+			final[j++] = '.';
+		final[j++] = c[i--] + '0';
+	}
+	final[j] = 0;
+	printf("%s\n", final);
+	exit(1);
+}
 
-// 	// r[0] = point + afterpoint;
-// 	// unsigned short i = r2[0];
-// 	// unsigned short j = r[0];
-// 	// while (j >= 1) {
-// 	// 	r[j--] = r2[i--];
-// 	// }
+char *round_nb(unsigned short *n, int point, int afterpoint, char sign)
+{
+	int sgn = 0;
+	if (sign == -1)
+		sgn = 1;
+	afterpoint = (!afterpoint) ? 6 : afterpoint;
+	int rounded = n[0] - point - afterpoint;
+	
+	unsigned short *a, *b, *b1, *c;
 
-// 	// return r;
-// }
-
-
+	a = cpy_nb(n);
+	b = pow_nb(10, rounded-1);
+	b1 = cpy_nb(b);
+	c = add_nb(a, b1, &point);
+	
+	int i = c[0];
+	while (i)
+	{
+		if (c[i])
+			nbtoa1(c, i, point, afterpoint, sgn);
+		i--;
+	}
+	// while (i <= c[0])
+	// 	printf("%d", c[i++]);
+	// print432_nb(c);
+	ft_putchar('\n');
+}
