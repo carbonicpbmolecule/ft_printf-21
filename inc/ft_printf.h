@@ -71,8 +71,8 @@ unsigned short 			*mult_nb(unsigned short int *a, unsigned short int *b);
 char 					*nbtoa(unsigned short int *r, int point, char sign);
 unsigned short  		getsize(unsigned long int n);
 void 					nbzero(unsigned short int *n, unsigned short int len);
-unsigned short int 		*add_nb(unsigned short int *a, unsigned short int *b);
-unsigned short 			*round_nb(unsigned short *n, int point, int afterpoint);
+unsigned short int 		*add_nb(unsigned short int *a, unsigned short int *b, int *point);
+char					*round_nb(unsigned short *n, int point, int afterpoint, char sign);
 void 					print432_nb(unsigned short int *r); /////////////////[f;seik]
 
 int				ft_printf(const char *format, ...);
