@@ -18,11 +18,14 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <wchar.h>
+# include <math.h>
 
-#define DBLRIGOR 17
+#include <stdint.h>
+
+#define DBLRIGOR 16
 
 # define F	100
-# define LD	101
+# define L	101
 # define I	102
 # define D	103
 
@@ -44,11 +47,11 @@ typedef union
 	double d;
 	struct
 	{
-		unsigned long int mantissa	: 52;
-		unsigned short int exponent	: 11;
-		char sign					: 1;
-	} parts;
-} double_cast;
+		unsigned long int mantissa			: 52;
+		unsigned int exponent				: 11;
+		char sign							: 1;
+	}										parts;
+}											binary64;
 
 typedef struct	s_arg_params
 {
@@ -65,18 +68,21 @@ typedef struct	s_arg_params
 	char		*data;
 }				t_argument;
 
+int				  		getsize(unsigned long int n);
 unsigned short  		*write_long_int(unsigned long int n);
 unsigned short 			*write_double(double d, char flag);
 unsigned short 			*pow_nb(unsigned int nb, int power);
 unsigned short 			*mult_nb(unsigned short int *a, unsigned short int *b);
-char 					*nbtoa(unsigned short int *r, int point, char sign);
-unsigned short  		getsize(unsigned long int n);
 void 					nbzero(unsigned short int *n, unsigned short int len);
 unsigned short int 		*add_nb(unsigned short int *a, unsigned short int *b, int *point);
+void					copy_number_0(unsigned short *dest, unsigned short *src);
+char					*nbtoa1(unsigned short *c, int point, int afterpoint, int sign);
 char		 			*round_nb(unsigned short *n, int point, int afterpoint, char sign);
-void 					print432_nb(unsigned short int *r);
-void					show_mem_a(unsigned short *a, int flag);
-unsigned short			*cpy_nb(unsigned short *n);
+
+
+
+
+
 
 int				ft_printf(const char *format, ...);
 t_argument		*arg_parse(const char *format);

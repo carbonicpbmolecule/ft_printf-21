@@ -13,7 +13,7 @@
 #include "ft_printf.h"
 #define MODIFICATORS_LEN 5
 
-const char g_modificators[4][3] = {"hh", "h", "ll", "l"};
+const char g_modificators[5][3] = {"hh", "h", "ll", "l", "L"};
 
 int		valid_modificator(const char *str)
 {

@@ -55,11 +55,9 @@ static int			arg_size(const char *format)
 
 static int			arg_afterpoint(t_argument *arg, const char *format)
 {
-	int		afterpoint;
 	int		offset;
 	char	*delimiter;
 
-	afterpoint = 0;
 	delimiter = ft_strnchr(format, '.', arg->size - 2);
 	if (delimiter)
 		offset = ft_strlen(format) - ft_strlen(delimiter);
