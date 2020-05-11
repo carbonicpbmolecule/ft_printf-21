@@ -1,5 +1,5 @@
 #include "ft_printf.h"
-#define RIGOR 30
+#define RIGOR 64
 
 void show_mem_a(unsigned short *a, int flag)
 {
@@ -60,7 +60,7 @@ unsigned short *write_double(double d, char flag) {
 	res[0] = res_len - 1;
 
 	int i = res_len - ipart_len;
-	// char ch = 0;
+
 	while (ipart) {
 		res[i++] = ipart % 10;
 		ipart /= 10;
@@ -74,9 +74,7 @@ unsigned short *write_double(double d, char flag) {
 		fpart -= tmp;
 		lenght++;
 	}
-	// printf("%d\n", lenght);
-	// exit(1);
-	// show_mem_a(res, 1);
+
 	return res;
 }
 
@@ -157,7 +155,11 @@ unsigned short int *add_nb(unsigned short int *a, unsigned short int *b, int *po
 
 	for (int i = 1; i <= max; i++)
 	{
-		c = c + a[i] + b[i];
+		if (i > b[0])
+			kd = 0;
+		else
+			kd = b[i];
+		c = c + a[i] + kd;
 		a[i] = c % 10;
 		c = c / 10;
 	}
@@ -168,12 +170,13 @@ unsigned short int *add_nb(unsigned short int *a, unsigned short int *b, int *po
 		a[max] = c;
 	}
 	a[0] = max;
+	// show_mem_a(a, 1);
 	return a;
 }
 
 unsigned short *cpy_nb(unsigned short *n)
 {
-	int len = 100;
+	int len = 400;
 	
 	unsigned short *a = (unsigned short *)malloc(sizeof(unsigned short) * len);
 	nbzero(a, len);
@@ -186,49 +189,57 @@ unsigned short *cpy_nb(unsigned short *n)
 	return a;
 }
 
-char *nbtoa1(unsigned short *c, int point, int afterpoint, int sgn)
+char *nbtoa1(unsigned short *c, int point, int afterpoint, int sign)
 {
-	int final_len = point + 1 + afterpoint + sgn;
-	// printf("%d : sign %d\n", final_len, point + sgn);
-	char *final = (char *)malloc(sizeof(char) * final_len + 1);
-	final[final_len] = 0;
+	char *str;
+	int str_len = point - 1 + afterpoint + 1;
+	str_len += (sign < 0) ? 1 : 0;
+	str = (char *)malloc(sizeof(char) * str_len + 1);
 	int i = 0;
-
-	int len = c[0];
-	int fl = final_len;
-	// printf("%d\n", c[len]);
-	// show_mem_a(c, 0);
-	if (sgn)
-		i++;
-	while (i < fl)
+	int c_len = c[0];
+	if (sign < 0)
+		str[i++] = '-';
+	while (i < str_len)
 	{
-		if (i == point + sgn)
-			i++;
-		final[i++] = c[len--] + '0';
+		if (i == point - 1 + (sign < 0))
+			str[i++] = '.';
+		if (i < DBLRIGOR)
+			str[i] = c[c_len] + '0';
+		else
+			str[i] = '0';
+		i++;
+		c_len--;
 	}
-	final[point + sgn] = '.';
-	if (sgn)
-		final[0] = '-';
-	
-	// printf("%s\n%d\n", final, final_len);
-	return final;
+	str[str_len] = 0;
+	return str;
 }
 
-char *round_nb(unsigned short *n, int point, int afterpoint, char sign)
+void		copy_number_0(unsigned short *dest, unsigned short *src)
 {
-	int sgn = 0;
-	if (sign == -1)
-		sgn = 1;
-	afterpoint = (!afterpoint) ? 6 : afterpoint;
-	int rounded = n[0] - point - afterpoint;
-	
-	unsigned short *a, *b, *b1, *c;
+	dest[0] = src[0];
+	int j = 1;
+	int i = 1;
 
-	a = cpy_nb(n);
-	b = pow_nb(10, rounded-1);
-	b1 = cpy_nb(b);
-	c = add_nb(a, b1, &point);
-	// printf("%d\n", point);
-	// show_mem_a(c, 1);
-	return nbtoa1(c, point, afterpoint, sgn);
+	while (j <= dest[0])
+		dest[i++] = src[j++];
 }
+
+char		*round_nb(unsigned short *n, int point, int afterpoint, char sign)
+{
+	unsigned short number1[n[0] + 1];
+	unsigned short number2[n[0] + 1];
+	unsigned short *result;
+	copy_number_0(number1, n);
+	int power = n[0] - (point - 1) - afterpoint;
+
+	int index = 1;
+	number2[0] = power;
+	while (index < number2[0])
+		number2[index++] = 0;
+	number2[index] = 5;
+
+	result = add_nb(number1, number2, &point);
+
+	return nbtoa1(result, point, afterpoint, sign);
+}
+

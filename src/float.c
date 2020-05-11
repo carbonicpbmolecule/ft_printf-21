@@ -13,39 +13,50 @@
 #include "ft_printf.h"
 #include <math.h>
 
+
+
 static double power_t(double x, long n) {
     if(n == 0) return 1.0;
     if(n < 0) return 1.0 / (x * power_t (1.0 / x, n + 1));
     return x * power_t(x, n - 1);
 }
 
-int kek(unsigned short *a, unsigned short *b, int flag)
+static int getpartsize(int nb)
+{
+	int i = 0;
+	while (nb)
+	{
+		nb /= 10;
+		i++;
+	}
+	return i;
+}
+
+static int check_overflow(unsigned short *part1, unsigned short *part2, int flag)
 {
 	double n1;
-	int n1_int = 0;
-	if (flag)
-		n1 = (a[a[0]] * 1.0) + (a[a[0] - 1] * 0.1) + (a[a[0] - 2] * 0.01) + (a[a[0] - 3] * 0.001);
-	else
+	double n2;
+	int n1_int;
+	int n1_int_size;
+	int result;
+	int i;
+	if (!flag)
 	{
-		int i = a[0];
-		while (i > 0)
-			n1_int = n1_int * 10 + a[i--];
-		n1 = n1_int;
+		i = part1[0];
+		n1_int_size = i - 8;
+		while (i > n1_int_size && i > 0)
+			n1_int = n1_int * 10 + part1[i--];
+			n1_int_size = i;
 	}
 
-	double n2 = (b[b[0]] * 1.0) + (b[b[0] - 1] * 0.1) + (b[b[0] - 2] * 0.01) + (b[b[0] - 3] * 0.001);
-	int point = 0;
+	n2 = (part2[part2[0]] * 1.0) + (part2[part2[0] - 1] * 0.1) + (part2[part2[0] - 2] * 0.01) + (part2[part2[0] - 3] * 0.001);
 
-	int ipart = n1 * n2;
+	result = n1_int * n2;
 
-	if (ipart == 0)
+	if (getpartsize(n1_int) < getpartsize(result))
 		return 1;
-	while (ipart)
-	{
-		ipart /= 10;
-		point++;
-	}
-	return point;
+	return 0;
+
 }
 
 char *ft_ftoa(double n, int afterpoint) {
@@ -63,21 +74,18 @@ char *ft_ftoa(double n, int afterpoint) {
 		power = power_t(2, d.parts.exponent - 1023);
 		part1 = write_double(power, 0);
 	}
-	else {
+	else
 		part1 = pow_nb(2, d.parts.exponent - 1023);
-		// show_mem_a(part1, 0);
-	}
 
 	part2 = write_double(d.parts.mantissa / power_t(2, 52), 1);
 
-	// show_mem_a(part1, 1);
-	// show_mem_a(part2, 0);
-
+	if (!flag)
+		point = part1[0] + 1 + check_overflow(part1, part2, flag);
+	else
+		point = 2;
 
 	result = mult_nb(part1, part2);
-
-	// show_mem_a(result, 0);
-	point = kek(part1, part2, flag);
 	final = round_nb(result, point, afterpoint, d.parts.sign);
+
 	return final;
 }
