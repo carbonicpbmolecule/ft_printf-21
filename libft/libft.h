@@ -90,5 +90,6 @@ int					ft_get_nb_size(unsigned int nb);
 int					ft_count_words(const char *str, char c);
 void				ft_strrev(char *str, int len);
 double				ft_power(double x, long n);
+long double			ft_power_l(long double x, long n);
 
 #endif

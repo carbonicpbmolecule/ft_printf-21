@@ -31,7 +31,7 @@ unsigned short		*write_long_int(unsigned long n)
 	return (r);
 }
 
-unsigned short 		*write_double(double d, char flag)
+unsigned short 		*write_double(long double d, char flag)
 {
 	unsigned long 		ipart;
 	int 				ipart_len;
@@ -185,10 +185,11 @@ char 				*nbtoa1(unsigned short *c, int point, int afterpoint, int sign)
 			break;
 		if (i == point - 1 + (sign < 0))
 			str[i++] = '.';
-		if (i < DBLRIGOR)
-			str[i] = c[c_len] + '0';
-		else
-			str[i] = '0';
+		str[i] = c[c_len] + '0';
+		// if (i < DBLRIGOR)
+		// 	str[i] = c[c_len] + '0';
+		// else
+		// 	str[i] = '0';
 		i++;
 		c_len--;
 	}

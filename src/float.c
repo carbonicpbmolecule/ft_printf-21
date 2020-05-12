@@ -37,7 +37,8 @@ static int		check_overflow(unsigned short *part1, unsigned short *part2, int fla
 	return (0);
 }
 
-char 			*ft_ftoa(double n, int afterpoint) {
+char 			*ft_ftoa(double n, int afterpoint)
+{
 	binary64		d;
 	unsigned short 	*part1;
 	unsigned short	*part2;
@@ -61,5 +62,33 @@ char 			*ft_ftoa(double n, int afterpoint) {
 	point = flag ? 2 : part1[0] + 1 + check_overflow(part1, part2, flag);
 	result = mult_nb(part1, part2);
 	final = round_nb(result, point, afterpoint, d.parts.sign);
+	return (final);
+}
+
+char 			*ft_lftoa(long double n, int afterpoint)
+{
+	binary80 		ld;
+	int				point;
+	int				flag;
+	long double		power;
+	unsigned short 	*part1;
+	unsigned short 	*part2;
+	unsigned short	*result;
+	char			*final;
+
+	ld.ld = n;
+	point = 0;
+	flag = ld.parts.exponent < 16383;
+	if (flag)
+	{
+		power = ft_power_l(2, ld.parts.exponent - 16383);
+		part1 = write_double(power, 0);
+	}
+	else
+		part1 = pow_nb(2, ld.parts.exponent - 16383);
+	part2 = write_double(ld.parts.mantissa / ft_power(2, 63), 0);
+	point = flag ? 2 : part1[0] + 1 + check_overflow(part1, part2, flag);
+	result = mult_nb(part1, part2);
+	final = round_nb(result, point, afterpoint, ld.parts.sign);
 	return (final);
 }

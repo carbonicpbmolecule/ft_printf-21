@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <wchar.h>
 # include <math.h>
+# include <float.h>
 
 #include <stdint.h>
 
@@ -47,11 +48,22 @@ typedef union
 	double d;
 	struct
 	{
-		unsigned long int mantissa			: 52;
+		unsigned long mantissa				: 52;
 		unsigned int exponent				: 11;
 		char sign							: 1;
 	}										parts;
 }											binary64;
+
+typedef union
+{
+	long double ld;
+	struct
+	{
+		unsigned long mantissa				: 64;
+		unsigned int exponent				: 15;
+		char sign							: 1;
+	}										parts;
+}											binary80;
 
 typedef struct	s_arg_params
 {
@@ -70,7 +82,7 @@ typedef struct	s_arg_params
 
 int				  		getsize(unsigned long int n);
 unsigned short  		*write_long_int(unsigned long int n);
-unsigned short 			*write_double(double d, char flag);
+unsigned short 			*write_double(long double d, char flag);
 unsigned short 			*pow_nb(unsigned int nb, int power);
 unsigned short 			*mult_nb(unsigned short int *a, unsigned short int *b);
 void 					nbzero(unsigned short int *n, unsigned short int len);
@@ -79,6 +91,8 @@ void					copy_number_0(unsigned short *dest, unsigned short *src);
 char					*nbtoa1(unsigned short *c, int point, int afterpoint, int sign);
 char		 			*round_nb(unsigned short *n, int point, int afterpoint, char sign);
 
+char					*ft_ftoa(double n, int afterpoint);
+char 					*ft_lftoa(long double n, int afterpoint);
 
 
 
@@ -95,7 +109,6 @@ void			handle_pointer(t_argument *arg, va_list *args);
 void			handle_number(t_argument *arg, va_list *args);
 void			handle_chars(t_argument *arg, va_list *args);
 char			*ft_ltoa_base(unsigned long long value, int base, int l_case);
-char			*ft_ftoa(double n, int afterpoint);
 char			*ft_itoa_base(long long value, int base, int l_case);
 char			*ft_ptoa(unsigned long int address);
 int				cputchar(char c);
