@@ -17,18 +17,20 @@ unsigned short		*write_long_int(unsigned long n)
 {
 	int					i;
 	int					len;
-	unsigned short  	*r;
+	unsigned short  	*result;
 
 	len = getsize(n) + 1;
 	i = 1;
-	r = (unsigned short *)malloc(sizeof(unsigned short) * len);
-	nbzero(r, len);
-	r[0] = len - 1;
+	result = (unsigned short *)malloc(sizeof(unsigned short) * len);
+	if (!result)
+		exit(1);
+	nbzero(result, len);
+	result[0] = len - 1;
 	while (n) {
-		r[i++] = n % 10;
+		result[i++] = n % 10;
 		n /= 10;
 	}
-	return (r);
+	return (result);
 }
 
 unsigned short 		*write_double(long double d, char flag)
@@ -38,7 +40,7 @@ unsigned short 		*write_double(long double d, char flag)
 	double 				fpart;
 	int 				lenght;
 	unsigned 	 		res_len;
-	unsigned short 		*res;
+	unsigned short 		*result;
 	int 				i;
 	int 				tmp;
 
@@ -54,12 +56,14 @@ unsigned short 		*write_double(long double d, char flag)
 		lenght++;
 	}
 	res_len = ipart_len + RIGOR + 1;
-	res = (unsigned short *)malloc(sizeof(unsigned short) * res_len);
-	nbzero(res, res_len);
-	res[0] = res_len - 1;
+	result = (unsigned short *)malloc(sizeof(unsigned short) * res_len);
+	if (!result)
+		exit(1);
+	nbzero(result, res_len);
+	result[0] = res_len - 1;
 	i = res_len - ipart_len;
 	while (ipart) {
-		res[i++] = ipart % 10;
+		result[i++] = ipart % 10;
 		ipart /= 10;
 	}
 	i = res_len - ipart_len - 1;
@@ -67,11 +71,11 @@ unsigned short 		*write_double(long double d, char flag)
 	while (i >= 1) {
 		fpart *= 10;
 		tmp = fpart;
-		res[i--] = tmp;
+		result[i--] = tmp;
 		fpart -= tmp;
 		lenght++;
 	}
-	return (res);
+	return (result);
 }
 
 unsigned short 		*pow_nb(unsigned int nb, int power)
@@ -96,15 +100,17 @@ unsigned short 		*pow_nb(unsigned int nb, int power)
 unsigned short 		*mult_nb(unsigned short *a, unsigned short *b)
 {
 	unsigned short	 	rlen;
-	unsigned short  	*r;
+	unsigned short  	*result;
 	unsigned short  	cr;
 	unsigned short		k;
 	unsigned short		i;
 	unsigned short		j;
 
 	rlen = a[0] + b[0] + 1;
-	r = (unsigned short int *)malloc(sizeof(unsigned short int) * rlen);
-	nbzero(r, rlen);
+	result = (unsigned short int *)malloc(sizeof(unsigned short int) * rlen);
+	if (!result)
+		exit(1);
+	nbzero(result, rlen);
 	i = 1;
 	while (i <= a[0])
 	{
@@ -114,19 +120,19 @@ unsigned short 		*mult_nb(unsigned short *a, unsigned short *b)
 			cr = a[i] * b[j];
 			k = i + j - 1;
 			if (cr == 0)
-				r[0] = k++;
+				result[0] = k++;
 			while (cr)
 			{
-				cr = cr + r[k];
-				r[k] = cr % 10;
+				cr = cr + result[k];
+				result[k] = cr % 10;
 				cr /= 10;
-				(k > r[0]) ? r[0] = k++ : k++;
+				(k > result[0]) ? result[0] = k++ : k++;
 			}
 			j++;
 		}
 		i++;
 	}
-	return (r);
+	return (result);
 }
 
 void 				nbzero(unsigned short *n, unsigned short len) {
@@ -135,17 +141,6 @@ void 				nbzero(unsigned short *n, unsigned short len) {
 	i = 0;
 	while (i < len)
 		n[i++] = 0;
-}
-
-void 				show_mem_a(unsigned short *a, int flag)
-{
-	int i = 1;
-	printf("%d | ", a[0]);
-	while (i <= a[0])
-		printf("%d", a[i++]);
-	printf("\n");
-	if (flag)
-		exit(1);
 }
 
 unsigned short		*add_nb(unsigned short *a, unsigned short *b, int *point)
@@ -181,9 +176,7 @@ unsigned short		*add_nb(unsigned short *a, unsigned short *b, int *point)
 
 char 				*nbtoa1(unsigned short *c, int point, int afterpoint, int sign, char *specdot)
 {
-	// printf("%c\n", *specdot);
-	// exit(1);
-	char 				*str;
+	char 				*result;
 	int 				str_len;
 	int 				i;
 	int 				c_len;
@@ -191,32 +184,34 @@ char 				*nbtoa1(unsigned short *c, int point, int afterpoint, int sign, char *s
 	str_len += (afterpoint || *specdot) ? 1 : 0;
 	str_len += (sign < 0) ? 1 : 0;
 
-	str = (char *)malloc(sizeof(char) * str_len + 1);
+	result = (char *)malloc(sizeof(char) * str_len + 1);
+	if (!result)
+		exit(1);
 	i = 0;
 	c_len = c[0];
 	if (sign < 0)
-		str[i++] = '-';
+		result[i++] = '-';
 	while (i < str_len)
 	{
 		if (!afterpoint && i == point - 1 + (sign < 0) && *specdot)
 		{
 			*specdot = 0;
-			str[i++] = '.';
+			result[i++] = '.';
 		}
 
 		if (!afterpoint && i == point - 1 + (sign < 0))
 			break ;
 		if (i == point - 1 + (sign < 0))
 		{
-			str[i++] = '.';
+			result[i++] = '.';
 		}
-		str[i] = c[c_len] + '0';
+		result[i] = c[c_len] + '0';
 		i++;
 		c_len--;
 	}
 	*specdot = 0;
-	str[str_len] = 0;
-	return (str);
+	result[str_len] = 0;
+	return (result);
 }
 
 void				copy_number_0(unsigned short *dest, unsigned short *src)
