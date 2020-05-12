@@ -20,6 +20,8 @@ static void		get_special_chars(char *prefix, int type)
 		ft_strcpy(prefix, "0X");
 	else if (type == O)
 		ft_strcpy(prefix, "0");
+	else if (type == F)
+		ft_strcpy(prefix, ".");
 }
 
 int				parse_flags(const char *format, t_argument *arg)
