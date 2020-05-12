@@ -134,12 +134,23 @@ void 				nbzero(unsigned short *n, unsigned short len) {
 		n[i++] = 0;
 }
 
-unsigned short		*add_nb(unsigned short *a, unsigned short *b, int *point) {
+void 				show_mem_a(unsigned short *a, int flag)
+{
+	int i = 1;
+	printf("%d | ", a[0]);
+	while (i <= a[0])
+		printf("%d", a[i++]);
+	printf("\n");
+	if (flag)
+		exit(1);
+}
+
+unsigned short		*add_nb(unsigned short *a, unsigned short *b, int *point)
+{
 	int 				max;
 	int					c;
 	int 				kd;
 	int 				i;
-
 	max = (a[0] > b[0]) ? a[0] : b[0];
 	c = 0;
 	kd = 0;
@@ -171,9 +182,10 @@ char 				*nbtoa1(unsigned short *c, int point, int afterpoint, int sign)
 	int 				str_len;
 	int 				i;
 	int 				c_len;
-
-	str_len = point - 1 + afterpoint + 1;
+	str_len = point - 1 + afterpoint;
+	str_len += (afterpoint) ? 1 : 0;
 	str_len += (sign < 0) ? 1 : 0;
+
 	str = (char *)malloc(sizeof(char) * str_len + 1);
 	i = 0;
 	c_len = c[0];
@@ -182,14 +194,10 @@ char 				*nbtoa1(unsigned short *c, int point, int afterpoint, int sign)
 	while (i < str_len)
 	{
 		if (!afterpoint && i == point - 1 + (sign < 0))
-			break;
+			break ;
 		if (i == point - 1 + (sign < 0))
 			str[i++] = '.';
 		str[i] = c[c_len] + '0';
-		// if (i < DBLRIGOR)
-		// 	str[i] = c[c_len] + '0';
-		// else
-		// 	str[i] = '0';
 		i++;
 		c_len--;
 	}
