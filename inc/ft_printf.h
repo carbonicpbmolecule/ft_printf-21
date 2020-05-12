@@ -43,27 +43,27 @@
 # define RIGHT 1
 # define LEFT  0
 
-typedef union
+typedef union								u_binary64
 {
-	double d;
+	double									d;
 	struct
 	{
-		unsigned long mantissa				: 52;
-		unsigned int exponent				: 11;
-		char sign							: 1;
-	}										parts;
-}											binary64;
+		unsigned long 						mantis: 52;
+		unsigned int 						exp: 11;
+		char								sign: 1;
+	}										s_parts;
+}											t_binary64;
 
-typedef union
+typedef union								u_binary80
 {
-	long double ld;
+	long double								ld;
 	struct
 	{
-		unsigned long mantissa				: 64;
-		unsigned int exponent				: 15;
-		char sign							: 1;
-	}										parts;
-}											binary80;
+		unsigned long 						mantis: 64;
+		unsigned int						exp: 15;
+		char 								sign: 1;
+	}										s_parts;
+}											t_binary80;
 
 typedef struct	s_arg_params
 {
