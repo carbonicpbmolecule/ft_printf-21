@@ -43,7 +43,7 @@ int				parse_flags(const char *format, t_argument *arg)
 			arg->field_filling = ' ';
 		}
 		if (format[i] == ' ' && arg->type <= D)
-			arg->sign_display = arg->sign_display ? '+' : ' ';
+			arg->sign_display = arg->sign_display ? arg->sign_display : ' ';
 		if (format[i] == '+' && arg->type <= D)
 			arg->sign_display = '+';
 		i++;

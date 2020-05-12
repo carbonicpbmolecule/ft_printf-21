@@ -24,7 +24,7 @@ static void		handle_right(t_argument *arg, size_t *printed, char *field)
 		*printed += cputstr(arg->special);
 	if (arg->field_filling == '0' && field)
 		*printed += cputstr(field);
-	if (arg->afterpoint >= 0 || !ft_strequ(arg->data, "0"))
+	if ((arg->afterpoint >= 0  || arg->type == F) || !ft_strequ(arg->data, "0"))
 		*printed += cputstr(arg->data);
 	if (arg->type == C && arg->data[0] == '\0')
 		*printed += cputchar(0);
@@ -56,12 +56,12 @@ static int		define_precision(t_argument *arg)
 	int		data_len;
 	char	*data;
 
-	if (ft_strequ(arg->data, "0") && arg->afterpoint != 0)
+	if (ft_strequ(arg->data, "0") && arg->afterpoint != 0 && arg->type != F)
 		arg->data[0] = '\0';
 	data_len = ft_strlen(arg->data);
 	precision = arg->afterpoint - data_len - (arg->type == O ? \
 											ft_strlen(arg->special) : 0);
-	if ((arg->type >= F && arg->type <= U) || arg->type == P)
+	if ((arg->type > F && arg->type <= U) || arg->type == P)
 	{
 		if (precision > 0)
 		{
