@@ -176,14 +176,16 @@ unsigned short		*add_nb(unsigned short *a, unsigned short *b, int *point)
 	return (a);
 }
 
-char 				*nbtoa1(unsigned short *c, int point, int afterpoint, int sign)
+char 				*nbtoa1(unsigned short *c, int point, int afterpoint, int sign, char *specdot)
 {
+	// printf("%c\n", *specdot);
+	// exit(1);
 	char 				*str;
 	int 				str_len;
 	int 				i;
 	int 				c_len;
 	str_len = point - 1 + afterpoint;
-	str_len += (afterpoint) ? 1 : 0;
+	str_len += (afterpoint || *specdot) ? 1 : 0;
 	str_len += (sign < 0) ? 1 : 0;
 
 	str = (char *)malloc(sizeof(char) * str_len + 1);
@@ -193,14 +195,23 @@ char 				*nbtoa1(unsigned short *c, int point, int afterpoint, int sign)
 		str[i++] = '-';
 	while (i < str_len)
 	{
+		if (!afterpoint && i == point - 1 + (sign < 0) && *specdot)
+		{
+			*specdot = 0;
+			str[i++] = '.';
+		}
+
 		if (!afterpoint && i == point - 1 + (sign < 0))
 			break ;
 		if (i == point - 1 + (sign < 0))
+		{
 			str[i++] = '.';
+		}
 		str[i] = c[c_len] + '0';
 		i++;
 		c_len--;
 	}
+	*specdot = 0;
 	str[str_len] = 0;
 	return (str);
 }
@@ -217,7 +228,7 @@ void				copy_number_0(unsigned short *dest, unsigned short *src)
 		dest[i++] = src[j++];
 }
 
-char				*round_nb(unsigned short *n, int point, int afterpoint, char sign)
+char				*round_nb(unsigned short *n, int point, int afterpoint, char sign, char *specdot)
 {
 	unsigned short 		number1[n[0] + 1];
 	unsigned short 		number2[n[0] + 1];
@@ -236,5 +247,5 @@ char				*round_nb(unsigned short *n, int point, int afterpoint, char sign)
 		number2[i++] = 0;
 	number2[i] = 5;
 	result = add_nb(number1, number2, &point);
-	return (nbtoa1(result, point, afterpoint, sign));
+	return (nbtoa1(result, point, afterpoint, sign, specdot));
 }

@@ -65,9 +65,9 @@ void			handle_number(t_argument *arg, va_list *args)
 	char *tmp;
 
 	if (arg->type == F && (!arg->modificator || *arg->modificator == 'l'))
-		arg->data = ft_ftoa(va_arg(*args, double), arg->afterpoint);
+		arg->data = ft_ftoa(va_arg(*args, double), arg->afterpoint, arg->special);
 	else if (arg->type == F && *arg->modificator == 'L')
-		arg->data = ft_lftoa(va_arg(*args, long double), arg->afterpoint);
+		arg->data = ft_lftoa(va_arg(*args, long double), arg->afterpoint, arg->special);
 	else if (arg->type >= XS && arg->type <= U)
 		arg->data = handle_unsigned(arg, args);
 	else if (arg->type == D || arg->type == I)

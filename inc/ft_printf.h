@@ -88,11 +88,12 @@ unsigned short 			*mult_nb(unsigned short int *a, unsigned short int *b);
 void 					nbzero(unsigned short int *n, unsigned short int len);
 unsigned short int 		*add_nb(unsigned short int *a, unsigned short int *b, int *point);
 void					copy_number_0(unsigned short *dest, unsigned short *src);
-char					*nbtoa1(unsigned short *c, int point, int afterpoint, int sign);
-char		 			*round_nb(unsigned short *n, int point, int afterpoint, char sign);
 
-char					*ft_ftoa(double n, int afterpoint);
-char 					*ft_lftoa(long double n, int afterpoint);
+char					*nbtoa1(unsigned short *c, int point, int afterpoint, int sign, char *specdot);
+char		 			*round_nb(unsigned short *n, int point, int afterpoint, char sign, char *specdot);
+
+char					*ft_ftoa(double n, int afterpoint, char *specdot);
+char 					*ft_lftoa(long double n, int afterpoint, char *specdot);
 
 
 
