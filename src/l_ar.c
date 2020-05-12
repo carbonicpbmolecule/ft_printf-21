@@ -97,7 +97,10 @@ unsigned short 		*mult_nb(unsigned short *a, unsigned short *b)
 {
 	unsigned short	 	rlen;
 	unsigned short  	*r;
-	unsigned short  	cr, k, i, j;
+	unsigned short  	cr;
+	unsigned short		k;
+	unsigned short		i;
+	unsigned short		j;
 
 	rlen = a[0] + b[0] + 1;
 	r = (unsigned short int *)malloc(sizeof(unsigned short int) * rlen);
