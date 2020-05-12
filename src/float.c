@@ -62,6 +62,9 @@ char 			*ft_ftoa(double n, int afterpoint)
 	point = flag ? 2 : part1[0] + 1 + check_overflow(part1, part2, flag);
 	result = mult_nb(part1, part2);
 	final = round_nb(result, point, afterpoint, d.parts.sign);
+	free(part1);
+	free(part2);
+	free(result);
 	return (final);
 }
 
@@ -90,5 +93,8 @@ char 			*ft_lftoa(long double n, int afterpoint)
 	point = flag ? 2 : part1[0] + 1 + check_overflow(part1, part2, flag);
 	result = mult_nb(part1, part2);
 	final = round_nb(result, point, afterpoint, ld.parts.sign);
+	free(part1);
+	free(part2);
+	free(result);
 	return (final);
 }
