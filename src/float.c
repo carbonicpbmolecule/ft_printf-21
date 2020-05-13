@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   float.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acyrenna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jirwin <jirwin@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/22 17:20:49 by acyrenna          #+#    #+#             */
-/*   Updated: 2020/04/22 17:20:50 by acyrenna         ###   ########.fr       */
+/*   Updated: 2020/05/13 10:43:31 by jirwin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int		check_overflow(unsigned short *part1, unsigned short *part2, int flag)
+static int		check_overflow(unsigned short *part1, \
+								unsigned short *part2, int flag)
 {
 	double			n2;
 	int				n1_int;
@@ -30,7 +31,8 @@ static int		check_overflow(unsigned short *part1, unsigned short *part2, int fla
 			n1_int_size = i;
 		}
 	}
-	n2 = (part2[part2[0]] * 1.0) + (part2[part2[0] - 1] * 0.1) + (part2[part2[0] - 2] * 0.01) + (part2[part2[0] - 3] * 0.001);
+	n2 = (part2[part2[0]] * 1.0) + (part2[part2[0] - 1] * 0.1) \
+		+ (part2[part2[0] - 2] * 0.01) + (part2[part2[0] - 3] * 0.001);
 	result = n1_int * n2;
 	return (getsize(n1_int) < getsize(result) ? 1 : 0);
 }
@@ -38,61 +40,57 @@ static int		check_overflow(unsigned short *part1, unsigned short *part2, int fla
 char 			*ft_ftoa(double n, int afterpoint, char *specdot)
 {
 	t_binary64		d;
-	unsigned short 	*part1;
-	unsigned short	*part2;
-	unsigned short 	*result;
+	t_sme			sme;
 	char 			*final;
-	double			power;
+	double			d_part1;
 	int				point;
-	int				flag;
 
 	d.d = n;
 	point = 0;
-	flag = d.s_parts.exp < 1023;
-	if (flag)
+	sme.denorm = d.s_parts.exp < OFFSETBIN64;
+	if (sme.denorm)
 	{
-		power = ft_power(2, d.s_parts.exp - 1023);
-		part1 = write_double(power, 0);
+		d_part1 = ft_power(2, d.s_parts.exp - OFFSETBIN64);
+		sme.part1 = write_double(d_part1, 0);
 	}
 	else
-		part1 = pow_nb(2, d.s_parts.exp - 1023);
-	part2 = write_double(d.s_parts.mantis / ft_power(2, 52), 1);
-	point = flag ? 2 : part1[0] + 1 + check_overflow(part1, part2, flag);
-	result = mult_nb(part1, part2);
-	final = round_nb(result, point, afterpoint, d.s_parts.sign, specdot);
-	free(part1);
-	free(part2);
-	free(result);
+		sme.part1 = pow_nb(2, d.s_parts.exp - OFFSETBIN64);
+	sme.part2 = write_double(d.s_parts.mantis / ft_power(2, 52), 1);
+	point = sme.denorm ? 2 : sme.part1[0] + 1 \
+			+ check_overflow(sme.part1, sme.part2, sme.denorm);
+	sme.result = mult_nb(sme.part1, sme.part2);
+	final = round_nb(sme.result, point, afterpoint, d.s_parts.sign, specdot);
+	free(sme.part1);
+	free(sme.part2);
+	free(sme.result);
 	return (final);
 }
 
 char 			*ft_lftoa(long double n, int afterpoint, char *specdot)
 {
 	t_binary80 		ld;
+	t_sme			sme;
 	int				point;
-	int				flag;
-	long double		power;
-	unsigned short 	*part1;
-	unsigned short 	*part2;
-	unsigned short	*result;
+	long double		d_part1;
 	char			*final;
 
 	ld.ld = n;
 	point = 0;
-	flag = ld.s_parts.exp < 16383;
-	if (flag)
+	sme.denorm = ld.s_parts.exp < OFFSETBIN80;
+	if (sme.denorm)
 	{
-		power = ft_power_l(2, ld.s_parts.exp - 16383);
-		part1 = write_double(power, 0);
+		d_part1 = ft_power_l(2, ld.s_parts.exp - OFFSETBIN80);
+		sme.part1 = write_double(d_part1, 0);
 	}
 	else
-		part1 = pow_nb(2, ld.s_parts.exp - 16383);
-	part2 = write_double(ld.s_parts.mantis / ft_power(2, 63), 0);
-	point = flag ? 2 : part1[0] + 1 + check_overflow(part1, part2, flag);
-	result = mult_nb(part1, part2);
-	final = round_nb(result, point, afterpoint, ld.s_parts.sign, specdot);
-	free(part1);
-	free(part2);
-	free(result);
+		sme.part1 = pow_nb(2, ld.s_parts.exp - OFFSETBIN80);
+	sme.part2 = write_double(ld.s_parts.mantis / ft_power(2, 63), 0);
+	point = sme.denorm ? 2 : sme.part1[0] + 1 \
+			+ check_overflow(sme.part1, sme.part2, sme.denorm);
+	sme.result = mult_nb(sme.part1, sme.part2);
+	final = round_nb(sme.result, point, afterpoint, ld.s_parts.sign, specdot);
+	free(sme.part1);
+	free(sme.part2);
+	free(sme.result);
 	return (final);
 }

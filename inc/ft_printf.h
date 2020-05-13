@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acyrenna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: quigon <quigon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 20:18:26 by acyrenna          #+#    #+#             */
-/*   Updated: 2020/04/29 20:24:49 by acyrenna         ###   ########.fr       */
+/*   Updated: 2020/05/13 10:38:44 by quigon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 # include <float.h>
 
 #include <stdint.h>
-
-#define DBLRIGOR 16
 
 # define F	100
 # define L	101
@@ -42,6 +40,11 @@
 
 # define RIGHT 1
 # define LEFT  0
+
+# define DBLRIGOR 16
+# define OFFSETBIN64 1023
+# define OFFSETBIN80 16383
+
 
 typedef union								u_binary64
 {
@@ -64,6 +67,14 @@ typedef union								u_binary80
 		char 								sign: 1;
 	}										s_parts;
 }											t_binary80;
+
+typedef struct 								s_sme
+{
+	int										denorm;
+	unsigned short							*part1;
+	unsigned short							*part2;
+	unsigned short							*result;
+}											t_sme;
 
 typedef struct	s_arg_params
 {
