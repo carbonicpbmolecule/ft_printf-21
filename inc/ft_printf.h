@@ -6,7 +6,7 @@
 /*   By: jirwin <jirwin@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 20:18:26 by acyrenna          #+#    #+#             */
-/*   Updated: 2020/05/13 16:37:54 by jirwin           ###   ########.fr       */
+/*   Updated: 2020/05/13 16:42:54 by jirwin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <wchar.h>
-
-#include <stdint.h>
 
 # define F	100
 # define L	101

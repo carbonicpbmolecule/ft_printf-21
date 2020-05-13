@@ -6,7 +6,7 @@
 /*   By: jirwin <jirwin@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/22 17:20:49 by acyrenna          #+#    #+#             */
-/*   Updated: 2020/05/13 16:35:08 by jirwin           ###   ########.fr       */
+/*   Updated: 2020/05/13 16:55:17 by jirwin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,5 @@ char 			*lftoa(long double n, int afterpoint, char *specdot)
 	free(sme.part1);
 	free(sme.part2);
 	free(sme.result);
-	*specdot = 0;
-	return (final);
+	return (adddottostr(final, specdot));
 }
