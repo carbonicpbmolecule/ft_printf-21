@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jirwin <jirwin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jirwin <jirwin@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 20:18:26 by acyrenna          #+#    #+#             */
-/*   Updated: 2020/05/13 17:16:57 by jirwin           ###   ########.fr       */
+/*   Updated: 2020/05/13 18:34:16 by jirwin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,16 +99,21 @@ typedef struct			s_arg_params
 ** Long arithmetic functions
 */
 char					*ftoa(double n, int afterpoint, char *specdot);
-char 					*lftoa(long double n, int afterpoint, char *specdot);
-char					*long_ltoa(unsigned short *c, int point, int afterpoint, int sign);
-char		 			*long_round(unsigned short *n, int point, int afterpoint, char sign);
-unsigned short 			*long_write_double(long double d, char flag);
-unsigned short  		*long_write_long_int(unsigned long int n);
-unsigned short 			*long_mult(unsigned short int *a, unsigned short int *b);
-unsigned short 			*long_pow(unsigned int nb, int power);
-unsigned short int 		*long_add(unsigned short int *a, unsigned short int *b, int *point);
-int				  		getsize(unsigned long int n);
-void 					long_nbzero(unsigned short int *n, unsigned short int len);
+char					*lftoa(long double n, int afterpoint, char *specdot);
+char					*long_ltoa(unsigned short *c, int point, \
+										int afterpoint, int sign);
+char					*long_round(unsigned short *n, int point, \
+										int afterpoint, char sign);
+unsigned short			*long_write_double(long double d, char flag);
+unsigned short			*long_write_long_int(unsigned long int n);
+unsigned short			*long_mult(unsigned short int *a, \
+										unsigned short int *b);
+unsigned short			*long_pow(unsigned int nb, int power);
+unsigned short int		*long_add(unsigned short int *a, \
+										unsigned short int *b, int *point);
+int						getsize(unsigned long int n);
+void					long_nbzero(unsigned short int *n, \
+										unsigned short int len);
 void					long_nbcopy(unsigned short *dest, unsigned short *src);
 
 /*
@@ -119,8 +124,8 @@ int						ft_printf(const char *format, ...);
 /*
 ** Some specific 'atois' for representing long numbers
 */
-char					*ft_ltoa_base(unsigned long long value, int base, int\
-																		l_case);
+char					*ft_ltoa_base(unsigned long long value, \
+										int base, int l_case);
 char					*ft_itoa_base(long long value, int base, int l_case);
 
 /*

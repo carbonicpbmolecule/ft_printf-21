@@ -5,36 +5,37 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jirwin <jirwin@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/13 13:44:20 by jirwin            #+#    #+#             */
-/*   Updated: 2020/05/13 15:52:58 by jirwin           ###   ########.fr       */
+/*   Created: 2020/05/13 18:22:50 by jirwin            #+#    #+#             */
+/*   Updated: 2020/05/13 18:23:16 by jirwin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-unsigned short 			*long_pow(unsigned int nb, int power)
+unsigned short			*long_pow(unsigned int nb, int power)
 {
-	unsigned short 		*a;
-	unsigned short 		*tmp;
-	unsigned short 		*res;
+	unsigned short *a;
+	unsigned short *tmp;
+	unsigned short *result;
 
-	res = long_write_long_int(1);
+	result = long_write_long_int(1);
 	if (power == 0)
-		return res;
+		return (result);
 	a = long_write_long_int(nb);
-	while (power--) {
-		tmp = long_mult(res, a);
-		free(res);
-		res = tmp;
+	while (power--)
+	{
+		tmp = long_mult(result, a);
+		free(result);
+		result = tmp;
 	}
 	free(a);
-	return (res);
+	return (result);
 }
 
 static unsigned short	*long_mult_alloc(unsigned short *a, unsigned short *b)
 {
-	unsigned short	 	rlen;
-	unsigned short  	*result;
+	unsigned short rlen;
+	unsigned short *result;
 
 	rlen = a[0] + b[0] + 1;
 	result = (unsigned short int *)malloc(sizeof(unsigned short int) * rlen);
@@ -44,13 +45,25 @@ static unsigned short	*long_mult_alloc(unsigned short *a, unsigned short *b)
 	return (result);
 }
 
-unsigned short 			*long_mult(unsigned short *a, unsigned short *b)
+static void				checkremainder(unsigned short *a, \
+										unsigned short *remainder, int *k)
 {
-	unsigned short  	*result;
-	unsigned short  	cr;
-	int					k;
-	int					i;
-	int					j;
+	while (*remainder)
+	{
+		*remainder += a[*k];
+		a[*k] = *remainder % 10;
+		*remainder /= 10;
+		(*k > a[0]) ? a[0] = *k++ : *k++;
+	}
+}
+
+unsigned short			*long_mult(unsigned short *a, unsigned short *b)
+{
+	unsigned short	*result;
+	unsigned short	remainder;
+	int				k;
+	int				i;
+	int				j;
 
 	result = long_mult_alloc(a, b);
 	i = 0;
@@ -59,27 +72,22 @@ unsigned short 			*long_mult(unsigned short *a, unsigned short *b)
 		j = 0;
 		while (++j <= b[0])
 		{
-			cr = a[i] * b[j];
+			remainder = a[i] * b[j];
 			k = i + j - 1;
-			result[0] = (cr == 0) ? k++ : result[0];
-			while (cr)
-			{
-				cr += result[k];
-				result[k] = cr % 10;
-				cr /= 10;
-				(k > result[0]) ? result[0] = k++ : k++;
-			}
+			result[0] = (remainder == 0) ? k++ : result[0];
+			checkremainder(result, &remainder, &k);
 		}
 	}
 	return (result);
 }
 
-unsigned short		*long_add(unsigned short *a, unsigned short *b, int *point)
+unsigned short			*long_add(unsigned short *a, \
+									unsigned short *b, int *point)
 {
-	int 				max;
-	int					c;
-	int 				kd;
-	int 				i;
+	int max;
+	int c;
+	int kd;
+	int i;
 
 	max = (a[0] > b[0]) ? a[0] : b[0];
 	c = 0;

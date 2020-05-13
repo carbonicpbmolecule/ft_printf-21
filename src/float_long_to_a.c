@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   float_long_to_a.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jirwin <jirwin@student.21-school.ru>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/13 17:57:34 by jirwin            #+#    #+#             */
+/*   Updated: 2020/05/13 18:00:53 by jirwin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-char 				*long_ltoa(unsigned short *c, int point, \
-												int afterpoint, int sign)
+char	*long_ltoa(unsigned short *c, int point, int afterpoint, int sign)
 {
 	char 				*result;
 	int 				str_len;
@@ -37,7 +48,7 @@ char 				*long_ltoa(unsigned short *c, int point, \
 	return (result);
 }
 
-char				*long_round(unsigned short *n, int point, \
+char	*long_round(unsigned short *n, int point, \
 											int afterpoint, char sign)
 {
 	unsigned short 		number1[n[0] + 1];

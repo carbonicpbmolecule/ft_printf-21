@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   float.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jirwin <jirwin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jirwin <jirwin@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/13 17:05:49 by jirwin            #+#    #+#             */
-/*   Updated: 2020/05/13 17:06:53 by jirwin           ###   ########.fr       */
+/*   Created: 2020/05/13 18:01:13 by jirwin            #+#    #+#             */
+/*   Updated: 2020/05/13 18:03:59 by jirwin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int		check_overflow(unsigned short *part1, \
-								unsigned short *part2, int flag)
+static int	check_overflow(unsigned short *part1, \
+							unsigned short *part2, int flag)
 {
 	double			n2;
 	int				n1_int;
@@ -37,9 +37,9 @@ static int		check_overflow(unsigned short *part1, \
 	return (getsize(n1_int) < getsize(result) ? 1 : 0);
 }
 
-char			*adddottostr(char *str, char *specdot)
+char		*adddottostr(char *str, char *specdot)
 {
-	int 			len;
+	int				len;
 	int				i;
 	char			*result;
 
@@ -62,7 +62,7 @@ char			*adddottostr(char *str, char *specdot)
 	return (result);
 }
 
-char 			*ftoa(double n, int afterpoint, char *specdot)
+char		*ftoa(double n, int afterpoint, char *specdot)
 {
 	t_binary64		d;
 	t_sme			sme;
@@ -91,7 +91,7 @@ char 			*ftoa(double n, int afterpoint, char *specdot)
 	return (adddottostr(final, specdot));
 }
 
-char 			*lftoa(long double n, int afterpoint, char *specdot)
+char		*lftoa(long double n, int afterpoint, char *specdot)
 {
 	t_binary80		ld;
 	t_sme			sme;
@@ -119,4 +119,3 @@ char 			*lftoa(long double n, int afterpoint, char *specdot)
 	free(sme.result);
 	return (adddottostr(final, specdot));
 }
-
