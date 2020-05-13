@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: jirwin <jirwin@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/05/13 17:08:00 by jirwin            #+#    #+#              #
-#    Updated: 2020/05/13 17:08:19 by jirwin           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = libftprintf.a
 
 OBJS_DIR = .objects
@@ -21,6 +9,7 @@ LIBFT_PATH = libft/
 LIBFT_INCS =	libft.h
 LIBFT_SRCS = 	ft_isdigit.c\
 				ft_memalloc.c\
+				ft_itoa_base.c \
 				ft_memdel.c\
 				ft_memmove.c\
 				ft_memset.c\
@@ -54,7 +43,7 @@ LIBFT_OBJS_DIR = $(OBJS_DIR)
 
 PRINTF_PATH = src/
 PRINTF_INCS =	ft_printf.h
-PRINTF_SRCS =	ft_itoa_base.c\
+PRINTF_SRCS =	ft_itoa_base.c \
 				ft_ltoa_base.c\
 				write.c\
 				flags.c\
@@ -67,10 +56,9 @@ PRINTF_SRCS =	ft_itoa_base.c\
 				print.c\
 				undefined.c\
 				pointer.c \
-				float_write_long.c \
-				float_operations.c \
-				float_long_to_a.c \
-				float_helpers.c
+				l_ar.c \
+				float_helpers.c \
+				float_operations.c
 PRINTF_OBJS = $(PRINTF_SRCS:%.c=$(PRINTF_OBJS_DIR)/%.o)
 PRINTF_OBJS_DIR = $(OBJS_DIR)
 PRINTF_INCS_DIR = inc
@@ -82,7 +70,7 @@ $(NAME): $(LIBFT_OBJS) $(PRINTF_OBJS)
 	ranlib $(NAME)
 
 $(LIBFT_OBJS_DIR)/%.o: $(LIBFT_PATH)%.c
-	$(CC) $(CFLAGS) -c $< -I$(LIBFT_PATH) -o $@
+	$(CC) $(CFLAGS) -c $< -I $(LIBFT_PATH) -o $@
 
 $(PRINTF_OBJS_DIR)/%.o: $(PRINTF_PATH)%.c
 	$(CC) $(CFLAGS) -c $< $(addprefix -I,$(PRINTF_INCS_DIR)) -o $@

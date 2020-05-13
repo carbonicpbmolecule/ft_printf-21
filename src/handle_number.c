@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   handle_number.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jirwin <jirwin@student.21-school.ru>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/13 17:05:32 by jirwin            #+#    #+#             */
-/*   Updated: 2020/05/13 18:35:56 by jirwin           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "ft_printf.h"
 #include <wchar.h>
 
@@ -67,8 +55,7 @@ void			handle_number(t_argument *arg, va_list *args)
 	if (arg->type == F && (!arg->modificator || *arg->modificator == 'l'))
 		arg->data = ftoa(va_arg(*args, double), arg->afterpoint, arg->special);
 	else if (arg->type == F && *arg->modificator == 'L')
-		arg->data = lftoa(va_arg(*args, long double), arg->afterpoint, \
-															arg->special);
+		arg->data = lftoa(va_arg(*args, long double), arg->afterpoint, arg->special);
 	else if (arg->type >= XS && arg->type <= U)
 		arg->data = handle_unsigned(arg, args);
 	else if (arg->type == D || arg->type == I)
