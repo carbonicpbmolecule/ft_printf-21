@@ -27,7 +27,7 @@ int			handle_percent(const char *format, size_t *printed)
 	if (!format || !*format)
 		return (0);
 	format += 1;
-	while (is_valid_modificator(*format))
+	while (*format && is_valid_modificator(*format))
 	{
 		skipped++;
 		format++;
