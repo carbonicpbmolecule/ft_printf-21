@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   float.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jirwin <jirwin@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: acyrenna <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/22 17:20:49 by acyrenna          #+#    #+#             */
-/*   Updated: 2020/05/13 10:43:31 by jirwin           ###   ########.fr       */
+/*   Created: 2020/05/13 12:49:22 by acyrenna          #+#    #+#             */
+/*   Updated: 2020/05/13 12:49:23 by acyrenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int		check_overflow(unsigned short *part1, \
 	int				n1_int;
 	int				n1_int_size;
 	int				result;
-	int 			i;
+	int				i;
 
 	if (!flag)
 	{
@@ -37,11 +37,11 @@ static int		check_overflow(unsigned short *part1, \
 	return (getsize(n1_int) < getsize(result) ? 1 : 0);
 }
 
-char 			*ft_ftoa(double n, int afterpoint, char *specdot)
+char			*ft_ftoa(double n, int afterpoint, char *specdot)
 {
 	t_binary64		d;
 	t_sme			sme;
-	char 			*final;
+	char			*final;
 	double			d_part1;
 	int				point;
 
@@ -66,9 +66,9 @@ char 			*ft_ftoa(double n, int afterpoint, char *specdot)
 	return (final);
 }
 
-char 			*ft_lftoa(long double n, int afterpoint, char *specdot)
+char			*ft_lftoa(long double n, int afterpoint, char *specdot)
 {
-	t_binary80 		ld;
+	t_binary80		ld;
 	t_sme			sme;
 	int				point;
 	long double		d_part1;

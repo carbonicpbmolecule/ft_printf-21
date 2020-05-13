@@ -6,15 +6,15 @@
 #    By: dderevyn <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/21 20:30:28 by dderevyn          #+#    #+#              #
-#    Updated: 2020/05/05 19:53:24 by acyrenna         ###   ########.fr        #
+#    Updated: 2020/05/12 14:25:54 by acyrenna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
 OBJS_DIR = .objects
-CC = clang
-CFLAGS = -Wall -Werror -Wextra 
+CC = gcc
+CFLAGS = -g -Wall -Werror -Wextra 
 RM = /bin/rm -rf
 
 LIBFT_PATH = libft/
@@ -24,7 +24,6 @@ LIBFT_SRCS = 	ft_isdigit.c\
 				ft_memdel.c\
 				ft_memmove.c\
 				ft_memset.c\
-				ft_pow.c\
 				ft_strchr.c\
 				ft_strcmp.c\
 				ft_strcpy.c\
@@ -45,7 +44,9 @@ LIBFT_SRCS = 	ft_isdigit.c\
 				ft_putchar.c\
 				ft_strtrim.c\
 				ft_atoi.c\
-				ft_isspace.c
+				ft_isspace.c\
+				ft_power.c\
+				ft_power_l.c
 LIBFT_OBJS = $(LIBFT_SRCS:%.c=$(LIBFT_OBJS_DIR)/%.o)
 LIBFT_OBJS_DIR = $(OBJS_DIR)
 
@@ -63,7 +64,8 @@ PRINTF_SRCS =	ft_itoa_base.c\
 				parse.c\
 				print.c\
 				undefined.c\
-				pointer.c
+				pointer.c\
+				l_ar.c
 PRINTF_OBJS = $(PRINTF_SRCS:%.c=$(PRINTF_OBJS_DIR)/%.o)
 PRINTF_OBJS_DIR = $(OBJS_DIR)
 PRINTF_INCS_DIR = inc
@@ -103,7 +105,7 @@ norm:
 	$(addprefix $(PRINTF_INCS_DIR), $(PRINTF_INCS))
 
 test:
-	@$(CC) -g src/* $(NAME) test/main.c -o mod
+	@$(CC) -g test/main.c $(NAME) -I$(PRINTF_INCS_DIR) -o mod
 	@./mod
 
 .PHONY: all clean fclean re norm test
