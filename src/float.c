@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   float.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jirwin <jirwin@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jirwin <jirwin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/22 17:20:49 by acyrenna          #+#    #+#             */
-/*   Updated: 2020/05/13 16:55:17 by jirwin           ###   ########.fr       */
+/*   Created: 2020/05/13 17:05:49 by jirwin            #+#    #+#             */
+/*   Updated: 2020/05/13 17:06:53 by jirwin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int		check_overflow(unsigned short *part1, \
 	int				n1_int;
 	int				n1_int_size;
 	int				result;
-	int 			i;
+	int				i;
 
 	if (!flag)
 	{
@@ -66,7 +66,7 @@ char 			*ftoa(double n, int afterpoint, char *specdot)
 {
 	t_binary64		d;
 	t_sme			sme;
-	char 			*final;
+	char			*final;
 	double			d_part1;
 	int				point;
 
@@ -93,7 +93,7 @@ char 			*ftoa(double n, int afterpoint, char *specdot)
 
 char 			*lftoa(long double n, int afterpoint, char *specdot)
 {
-	t_binary80 		ld;
+	t_binary80		ld;
 	t_sme			sme;
 	int				point;
 	long double		d_part1;
@@ -119,3 +119,4 @@ char 			*lftoa(long double n, int afterpoint, char *specdot)
 	free(sme.result);
 	return (adddottostr(final, specdot));
 }
+

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jirwin <jirwin@student.21-school.ru>       +#+  +:+       +#+         #
+#    By: jirwin <jirwin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/01/21 20:30:28 by dderevyn          #+#    #+#              #
-#    Updated: 2020/05/13 15:33:25 by jirwin           ###   ########.fr        #
+#    Created: 2020/05/13 17:08:00 by jirwin            #+#    #+#              #
+#    Updated: 2020/05/13 17:08:19 by jirwin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,9 @@ LIBFT_SRCS = 	ft_isdigit.c\
 				ft_putchar.c\
 				ft_strtrim.c\
 				ft_atoi.c\
-				ft_isspace.c
+				ft_isspace.c\
+				ft_power.c\
+				ft_power_l.c
 LIBFT_OBJS = $(LIBFT_SRCS:%.c=$(LIBFT_OBJS_DIR)/%.o)
 LIBFT_OBJS_DIR = $(OBJS_DIR)
 
@@ -108,7 +110,7 @@ norm:
 	$(addprefix $(PRINTF_INCS_DIR), $(PRINTF_INCS))
 
 test:
-	@$(CC) -g src/* $(NAME) test/main.c -o mod
+	@$(CC) -g test/main.c $(NAME) -I$(PRINTF_INCS_DIR) -o mod
 	@./mod
 
 .PHONY: all clean fclean re norm test

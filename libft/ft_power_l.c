@@ -14,9 +14,9 @@
 
 long double		ft_power_l(long double x, long n)
 {
-    if (n == 0)
-		return 1.0;
-    if (n < 0)
-		return 1.0 / (x * ft_power_l(1.0 / x, n + 1));
-    return (x * ft_power_l(x, n - 1));
+	if (n == 0)
+		return (1.0);
+	if (n < 0)
+		return (1.0 / (x * ft_power_l(1.0 / x, n + 1)));
+	return (x * ft_power_l(x, n - 1));
 }

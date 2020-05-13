@@ -6,7 +6,7 @@
 /*   By: acyrenna <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/22 17:12:41 by acyrenna          #+#    #+#             */
-/*   Updated: 2020/04/29 20:12:39 by acyrenna         ###   ########.fr       */
+/*   Updated: 2020/05/13 12:37:31 by acyrenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void		handle_right(t_argument *arg, size_t *printed, char *field)
 		*printed += cputstr(arg->special);
 	if (arg->field_filling == '0' && field)
 		*printed += cputstr(field);
-	if ((arg->afterpoint >= 0  || arg->type == F) || !ft_strequ(arg->data, "0"))
+	if ((arg->afterpoint >= 0 || arg->type == F) || !ft_strequ(arg->data, "0"))
 		*printed += cputstr(arg->data);
 	if (arg->type == C && arg->data[0] == '\0')
 		*printed += cputchar(0);
