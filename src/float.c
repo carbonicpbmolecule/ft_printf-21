@@ -6,14 +6,17 @@ char 			*ftoa(double n, int afterpoint, char *specdot)
 	t_sme			sme;
 	char			*final;
 	double			d_part1;
-	int				point;
 
 	d.d = n;
-
+	// printf("%d\n", sme.afterpoint); exit(1);
+	if (afterpoint == -1)
+		afterpoint = 0;
+	sme.afterpoint = (afterpoint < 0) ? -afterpoint : afterpoint;
 	final = check_nan_inf64(d, n);
 	if (final)
 		return final;
-	point = 0;
+	sme.point = 0;
+	sme.sign = d.s_parts.sign;
 	sme.denorm = d.s_parts.exp < OFFSETBIN64;
 	if (sme.denorm)
 	{
@@ -24,8 +27,8 @@ char 			*ftoa(double n, int afterpoint, char *specdot)
 		sme.part1 = long_pow(2, d.s_parts.exp - OFFSETBIN64);
 	sme.part2 = write_double(d.s_parts.mantis / ft_power(2, 52), 1);
 	sme.result = long_mult(sme.part1, sme.part2);
-	point = sme.denorm ? 2 : sme.result[0] - sme.part2[0] + 2;
-	final = round_nb(sme.result, point, afterpoint, d.s_parts.sign, specdot);
+	sme.point = sme.denorm ? 2 : sme.result[0] - sme.part2[0] + 2;
+	final = long_round(&sme, specdot);
 	free(sme.part1);
 	free(sme.part2);
 	free(sme.result);
@@ -56,7 +59,7 @@ char 			*lftoa(long double n, int afterpoint, char *specdot)
 	sme.part2 = write_double(ld.s_parts.mantis / ft_power(2, 63), 0);
 	sme.result = long_mult(sme.part1, sme.part2);
 	point = sme.denorm ? 2 : sme.result[0] - sme.part2[0] + 2;
-	final = round_nb(sme.result, point, afterpoint, ld.s_parts.sign, specdot);
+	final = long_round(&sme, specdot);
 	free(sme.part1);
 	free(sme.part2);
 	free(sme.result);

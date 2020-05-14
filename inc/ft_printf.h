@@ -6,7 +6,7 @@
 /*   By: jirwin <jirwin@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 20:18:26 by acyrenna          #+#    #+#             */
-/*   Updated: 2020/05/14 12:53:37 by jirwin           ###   ########.fr       */
+/*   Updated: 2020/05/14 21:26:39 by jirwin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,14 @@ typedef union			u_binary80
 
 typedef struct 			s_sme
 {
+	char				sign;
+	int					afterpoint;
+	int					point;
 	int					denorm;
 	unsigned short		*part1;
 	unsigned short		*part2;
 	unsigned short		*result;
+	unsigned short		*rounded;
 }						t_sme;
 
 typedef struct			s_arg_params
@@ -115,8 +119,8 @@ unsigned short 			*write_double(long double d, char flag);
 void 					long_nbzero(unsigned short int *n, unsigned short int len);
 void					long_nbcopy(unsigned short *dest, unsigned short *src);
 
-char					*nbtoa1(unsigned short *c, int point, int afterpoint, int sign, char *specdot);
-char		 			*round_nb(unsigned short *n, int point, int afterpoint, char sign, char *specdot);
+char					*nbtoa1(t_sme *n, char *specdot);
+char		 			*long_round(t_sme *n, char *specdot);
 
 
 
