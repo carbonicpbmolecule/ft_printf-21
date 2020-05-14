@@ -100,9 +100,16 @@ int write_fpart(char *dest, int i, t_sme *n)
 {
 	int len = n->rounded[0];
 	int counter = 0;
+	int ipart = i;
 	int j = n->sign == - 1 ? 2 : 1;
 	while (counter < n->afterpoint)
 	{
+		if (counter >= n->rounded[0] - ipart)
+		{
+			dest[i++] = '0';
+			counter++;
+			continue;
+		}
 		dest[i] = n->rounded[len-i+j] + '0';
 		i++;
 		counter++;
