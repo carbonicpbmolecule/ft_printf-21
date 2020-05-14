@@ -8,7 +8,6 @@ char 			*ftoa(double n, int afterpoint, char *specdot)
 	double			d_part1;
 
 	d.d = n;
-	// printf("%d\n", sme.afterpoint); exit(1);
 	if (afterpoint == -1)
 		afterpoint = 0;
 	sme.afterpoint = (afterpoint < 0) ? -afterpoint : afterpoint;
@@ -39,15 +38,18 @@ char 			*lftoa(long double n, int afterpoint, char *specdot)
 {
 	t_binary80		ld;
 	t_sme			sme;
-	int				point;
-	long double		d_part1;
 	char			*final;
+	long double		d_part1;
 
 	ld.ld = n;
+	if (afterpoint == -1)
+		afterpoint = 0;
+	sme.afterpoint = (afterpoint < 0) ? -afterpoint : afterpoint;
 	final = check_nan_inf80(ld, n);
 	if (final)
 		return final;
-	point = 0;
+	sme.point = 0;
+	sme.sign = ld.s_parts.sign;
 	sme.denorm = ld.s_parts.exp < OFFSETBIN80;
 	if (sme.denorm)
 	{
@@ -58,7 +60,7 @@ char 			*lftoa(long double n, int afterpoint, char *specdot)
 		sme.part1 = long_pow(2, ld.s_parts.exp - OFFSETBIN80);
 	sme.part2 = write_double(ld.s_parts.mantis / ft_power(2, 63), 0);
 	sme.result = long_mult(sme.part1, sme.part2);
-	point = sme.denorm ? 2 : sme.result[0] - sme.part2[0] + 2;
+	sme.point = sme.denorm ? 2 : sme.result[0] - sme.part2[0] + 2;
 	final = long_round(&sme, specdot);
 	free(sme.part1);
 	free(sme.part2);

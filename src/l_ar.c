@@ -96,31 +96,18 @@ int write_ipart(char *dest, t_sme *n)
 	return (i);
 }
 
-int write_fpart(char *dest, int i, int end, t_sme *n)
+int write_fpart(char *dest, int i, t_sme *n)
 {
-	int res_len = n->rounded[0];
-
-	if (n->afterpoint)
-	{
-		dest[i++] = '.';
-		res_len += 1;
-	}
+	int len = n->rounded[0];
 	int counter = 0;
-	int ipart = i;
+	int j = n->sign == - 1 ? 2 : 1;
 	while (counter < n->afterpoint)
 	{
-		if (counter >= n->rounded[0] - ipart)
-		{
-			dest[i++] = '0';
-			counter++;
-			continue;
-		}
-		dest[i] = n->rounded[res_len - i] + '0';
+		dest[i] = n->rounded[len-i+j] + '0';
 		i++;
 		counter++;
 	}
 	dest[i] = 0;
-
 	return (i);
 }
 
@@ -128,8 +115,6 @@ char 				*nbtoa1(t_sme *n, char *specdot)
 {
 	char 				*result;
 	int 				str_len;
-	int 				i;
-	int 				c_len;
 	int					wr;
 	int					end;
 
@@ -141,13 +126,18 @@ char 				*nbtoa1(t_sme *n, char *specdot)
 	if (!result)
 		exit(1);
 	wr = write_ipart(result, n);
-	end = write_fpart(result, wr, str_len, n);
+	if (n->afterpoint)
+	{
+		result[wr++] = '.';
+		result[wr] = 0;
+	}
+	end = write_fpart(result, wr, n);
 	if (*specdot && !n->afterpoint)
 	{
 		result[end] = '.';
 		result[end+1] = 0;
-		*specdot = 0;
 	}
+	*specdot = 0;
 	return (result);
 }
 
@@ -172,7 +162,7 @@ char				*long_round(t_sme *n, char *specdot)
 {
 	unsigned short 		number1[n->result[0] + 1];
 	unsigned short 		number2[n->result[0] + 1];
-	unsigned short 		*result;
+
 	char *final;
 	long_nbcopy(number1, n->result);
 	get_term(n, number2);
