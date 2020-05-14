@@ -11,7 +11,7 @@ unsigned short		*write_long_int(unsigned long n)
 	result = (unsigned short *)malloc(sizeof(unsigned short) * len);
 	if (!result)
 		exit(1);
-	nbzero(result, len);
+	long_nbzero(result, len);
 	result[0] = len - 1;
 	while (n) {
 		result[i++] = n % 10;
@@ -46,7 +46,7 @@ unsigned short 		*write_double(long double d, char flag)
 	result = (unsigned short *)malloc(sizeof(unsigned short) * res_len);
 	if (!result)
 		exit(1);
-	nbzero(result, res_len);
+	long_nbzero(result, res_len);
 	result[0] = res_len - 1;
 	i = res_len - ipart_len;
 	while (ipart) {
@@ -113,7 +113,7 @@ char				*round_nb(unsigned short *n, int point, int afterpoint, char sign, char 
 	int 				power;
 	int 				i;
 
-	copy_number_0(number1, n);
+	long_nbcopy(number1, n);
 	if (afterpoint == - 1)
 		afterpoint = 0;
 	power = n[0] - (point - 1) - afterpoint;

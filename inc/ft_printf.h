@@ -6,7 +6,7 @@
 /*   By: jirwin <jirwin@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 20:18:26 by acyrenna          #+#    #+#             */
-/*   Updated: 2020/05/13 23:38:35 by jirwin           ###   ########.fr       */
+/*   Updated: 2020/05/14 12:53:37 by jirwin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@
 # define RIGOR 64
 # define OFFSETBIN64 1023
 # define OFFSETBIN80 16383
+# define MAXEXP64 0x7FF
+# define MAXEXP80 0x7FFF
 
 typedef union			u_binary64
 {
@@ -89,10 +91,15 @@ typedef struct			s_arg_params
 	char				*special;
 	char				*data;
 }						t_argument;
+void show_mem_a(unsigned short *a, int flag); // debug
+
+
 
 char					*ftoa(double n, int afterpoint, char *specdot);
 char 					*lftoa(long double n, int afterpoint, char *specdot);
 
+char					*check_nan_inf64(t_binary64 d, double n);
+char					*check_nan_inf80(t_binary80 d, long double n);
 
 
 
@@ -105,8 +112,8 @@ unsigned short int 		*long_add(unsigned short int *a, unsigned short int *b, int
 int				  		getsize(unsigned long int n);
 unsigned short  		*write_long_int(unsigned long int n);
 unsigned short 			*write_double(long double d, char flag);
-void 					nbzero(unsigned short int *n, unsigned short int len);
-void					copy_number_0(unsigned short *dest, unsigned short *src);
+void 					long_nbzero(unsigned short int *n, unsigned short int len);
+void					long_nbcopy(unsigned short *dest, unsigned short *src);
 
 char					*nbtoa1(unsigned short *c, int point, int afterpoint, int sign, char *specdot);
 char		 			*round_nb(unsigned short *n, int point, int afterpoint, char sign, char *specdot);

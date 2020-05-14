@@ -32,7 +32,7 @@ unsigned short	*long_mult(unsigned short *a, unsigned short *b)
 	result = (unsigned short int *)malloc(sizeof(unsigned short int) * rlen);
 	if (!result)
 		exit(1);
-	nbzero(result, rlen);
+	long_nbzero(result, rlen);
 	i = 1;
 	while (i <= a[0])
 	{

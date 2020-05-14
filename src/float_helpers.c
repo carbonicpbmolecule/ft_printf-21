@@ -12,7 +12,7 @@ int					getsize(unsigned long n) {
 	return (size);
 }
 
-void 				nbzero(unsigned short *n, unsigned short len) {
+void 				long_nbzero(unsigned short *n, unsigned short len) {
 	int 				i;
 
 	i = 0;
@@ -20,7 +20,7 @@ void 				nbzero(unsigned short *n, unsigned short len) {
 		n[i++] = 0;
 }
 
-void				copy_number_0(unsigned short *dest, unsigned short *src)
+void				long_nbcopy(unsigned short *dest, unsigned short *src)
 {
 	int 				i;
 	int 				j;
