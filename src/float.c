@@ -20,11 +20,11 @@ char 			*ftoa(double n, int afterpoint, char *specdot)
 	if (sme.denorm)
 	{
 		d_part1 = ft_power(2, d.s_parts.exp - OFFSETBIN64);
-		sme.part1 = write_double(d_part1, 0);
+		sme.part1 = long_write_double(d_part1, 0);
 	}
 	else
 		sme.part1 = long_pow(2, d.s_parts.exp - OFFSETBIN64);
-	sme.part2 = write_double(d.s_parts.mantis / ft_power(2, 52), 1);
+	sme.part2 = long_write_double(d.s_parts.mantis / ft_power(2, 52), 1);
 	sme.result = long_mult(sme.part1, sme.part2);
 	sme.point = sme.denorm ? 2 : sme.result[0] - sme.part2[0] + 2;
 	final = long_round(&sme, specdot);
@@ -54,11 +54,11 @@ char 			*lftoa(long double n, int afterpoint, char *specdot)
 	if (sme.denorm)
 	{
 		d_part1 = ft_power_l(2, ld.s_parts.exp - OFFSETBIN80);
-		sme.part1 = write_double(d_part1, 0);
+		sme.part1 = long_write_double(d_part1, 0);
 	}
 	else
 		sme.part1 = long_pow(2, ld.s_parts.exp - OFFSETBIN80);
-	sme.part2 = write_double(ld.s_parts.mantis / ft_power(2, 63), 0);
+	sme.part2 = long_write_double(ld.s_parts.mantis / ft_power(2, 63), 0);
 	sme.result = long_mult(sme.part1, sme.part2);
 	sme.point = sme.denorm ? 2 : sme.result[0] - sme.part2[0] + 2;
 	final = long_round(&sme, specdot);

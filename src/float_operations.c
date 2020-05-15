@@ -6,10 +6,10 @@ unsigned short	*long_pow(unsigned int nb, int power)
 	unsigned short *tmp;
 	unsigned short *res;
 
-	res = write_long_int(1);
+	res = long_write_lint(1);
 	if (power == 0)
 		return res;
-	a = write_long_int(nb);
+	a = long_write_lint(nb);
 	while (power--) {
 		tmp = long_mult(res, a);
 		free(res);

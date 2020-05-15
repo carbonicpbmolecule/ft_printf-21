@@ -11,7 +11,7 @@ void show_mem_a(unsigned short *a, int flag)
 		exit(1); 
 }
 
-unsigned short		*write_long_int(unsigned long n)
+unsigned short		*long_write_lint(unsigned long n)
 {
 	int					i;
 	int					len;
@@ -31,86 +31,99 @@ unsigned short		*write_long_int(unsigned long n)
 	return (result);
 }
 
-unsigned short 		*write_double(long double d, char flag)
+void		long_write_double_ipart(unsigned short *result, \
+											unsigned res_len, unsigned ipart)
 {
-	unsigned long 		ipart;
-	int 				ipart_len;
-	double 				fpart;
-	int 				lenght;
-	unsigned 	 		res_len;
-	unsigned short 		*result;
-	int 				i;
-	int 				tmp;
+	int		i;
 
-	ipart = d; 
-	fpart = d - ipart;
-	lenght = 0;
-	if (flag)
-		ipart++;
-	ipart_len = getsize(ipart);
-	if (!ipart_len)
-	{
-		ipart_len = 1;
-		lenght++;
-	}
-	res_len = ipart_len + RIGOR + 1;
-	result = (unsigned short *)malloc(sizeof(unsigned short) * res_len);
-	if (!result)
-		exit(1);
-	long_nbzero(result, res_len);
+	i = res_len - 1;
 	result[0] = res_len - 1;
-	i = res_len - ipart_len;
-	while (ipart) {
+	i = res_len - 1;
+	while (ipart)
+	{
 		result[i++] = ipart % 10;
 		ipart /= 10;
 	}
-	i = res_len - ipart_len - 1;
+}
+
+void		long_write_double_fpart(unsigned short *result, \
+											unsigned res_len, double fpart)
+{
+	int		i;
+	int		tmp;
+
+	i = res_len - 1 - 1;
 	tmp = 0;
-	while (i >= 1) {
+	while (i >= 1)
+	{
 		fpart *= 10;
 		tmp = fpart;
 		result[i--] = tmp;
 		fpart -= tmp;
-		lenght++;
 	}
+}
+
+unsigned short 		*long_write_double(long double d, char flag)
+{
+	unsigned long	ipart;
+	double			fpart;
+	unsigned		res_len;
+	unsigned short	*result;
+
+	ipart = d;
+	fpart = d - ipart;
+	if (flag)
+		ipart++;
+	res_len = 1 + RIGOR + 1;
+	result = (unsigned short *)malloc(sizeof(unsigned short) * res_len);
+	if (!result)
+		exit(1);
+	long_nbzero(result, res_len);
+	long_write_double_ipart(result, res_len, ipart);
+	long_write_double_fpart(result, res_len, fpart);
 	return (result);
 }
 
-int write_ipart(char *dest, t_sme *n)
+int long_toa_wipart(char *dest, t_sme *rounded)
 {
 	int i;
 	int j;
 	int len;
 
 	i = 0;
-	j = n->rounded[0];
-	len = n->point - 1;
-	if (n->sign == -1)
+	j = rounded->rounded[0];
+	len = rounded->point - 1;
+	if (rounded->sign == -1)
 		dest[i++] = '-';
 	while (len)
 	{
-		dest[i++] = n->rounded[j--] + '0';
+		dest[i++] = rounded->rounded[j--] + '0';
 		len--;
 	}
 	dest[i] = 0;
 	return (i);
 }
 
-int write_fpart(char *dest, int i, t_sme *n)
+int long_toa_wfpart(char *dest, int i, t_sme *rounded)
 {
-	int len = n->rounded[0];
-	int counter = 0;
-	int ipart = i;
-	int j = n->sign == - 1 ? 2 : 1;
-	while (counter < n->afterpoint)
+	int len;
+	int counter;
+	int ipart;
+	int j;
+
+	len = rounded->rounded[0];
+	counter = 0;
+	ipart = i;
+	j = rounded->sign == - 1 ? 2 : 1;
+	while (counter < rounded->afterpoint)
 	{
-		if (counter >= n->rounded[0] - ipart)
+		if (counter >= rounded->rounded[0] - ipart)
 		{
 			dest[i++] = '0';
 			counter++;
 			continue;
 		}
-		dest[i] = n->rounded[len-i+j] + '0';
+		dest[i] = rounded->rounded[len-i+j] + '0';
 		i++;
 		counter++;
 	}
@@ -118,62 +131,58 @@ int write_fpart(char *dest, int i, t_sme *n)
 	return (i);
 }
 
-char 				*nbtoa1(t_sme *n, char *specdot)
+char 				*long_toa(t_sme *rounded, char *specdot)
 {
 	char 				*result;
 	int 				str_len;
-	int					wr;
+	int					point;
 	int					end;
 
-	str_len = n->point - 1 + n->afterpoint;
-	str_len += (n->afterpoint || *specdot) ? 1 : 0;
-	str_len += (n->sign < 0) ? 1 : 0;
-
+	str_len = rounded->point - 1 + rounded->afterpoint;
+	str_len += (rounded->afterpoint || *specdot) ? 1 : 0;
+	str_len += (rounded->sign < 0) ? 1 : 0;
 	result = (char *)malloc(sizeof(char) * str_len + 1);
 	if (!result)
 		exit(1);
-	wr = write_ipart(result, n);
-	if (n->afterpoint)
-	{
-		result[wr++] = '.';
-		result[wr] = 0;
-	}
-	end = write_fpart(result, wr, n);
-	if (*specdot && !n->afterpoint)
+	point = long_toa_wipart(result, rounded);
+	if (rounded->afterpoint)
+		result[point++] = '.';
+	end = long_toa_wfpart(result, point, rounded);
+	if (*specdot && !rounded->afterpoint)
 	{
 		result[end] = '.';
-		result[end+1] = 0;
+		result[end + 1] = 0;
 	}
 	*specdot = 0;
 	return (result);
 }
 
-void get_term(t_sme *n, unsigned short *num)
+void get_term(t_sme *n, unsigned short *term)
 {
-	int term;
+	int term_len;
 	int i;
 	int ipart;
 	int fpart;
 
 	ipart = n->point - 1;
 	fpart = (n->afterpoint > n->result[0] - ipart) ? n->result[0] - ipart : n->afterpoint;
-	term = n->result[0] - ipart - fpart;
+	term_len = n->result[0] - ipart - fpart;
 	i = 1;
-	num[0] = term;
-	while (i < num[0])
-		num[i++] = 0;
-	num[i] = 5;
+	term[0] = term_len;
+	while (i < term[0])
+		term[i++] = 0;
+	term[i] = 5;
 }
 
 char				*long_round(t_sme *n, char *specdot)
 {
-	unsigned short 		number1[n->result[0] + 1];
-	unsigned short 		number2[n->result[0] + 1];
+	unsigned short	number1[n->result[0] + 1];
+	unsigned short	number2[n->result[0] + 1];
+	char			*final;
 
-	char *final;
 	long_nbcopy(number1, n->result);
 	get_term(n, number2);
 	n->rounded = long_add(number1, number2, &n->point);
-	final = nbtoa1(n, specdot);
+	final = long_toa(n, specdot);
 	return (final);
 }

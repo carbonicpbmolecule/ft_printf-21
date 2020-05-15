@@ -6,7 +6,7 @@
 /*   By: jirwin <jirwin@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 20:18:26 by acyrenna          #+#    #+#             */
-/*   Updated: 2020/05/14 21:26:39 by jirwin           ###   ########.fr       */
+/*   Updated: 2020/05/15 10:42:26 by jirwin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,14 +112,14 @@ unsigned short 			*long_mult(unsigned short int *a, unsigned short int *b);
 unsigned short int 		*long_add(unsigned short int *a, unsigned short int *b, int *point);
 
 
+unsigned short  		*long_write_lint(unsigned long int n);
+unsigned short 			*long_write_double(long double d, char flag);
 
 int				  		getsize(unsigned long int n);
-unsigned short  		*write_long_int(unsigned long int n);
-unsigned short 			*write_double(long double d, char flag);
 void 					long_nbzero(unsigned short int *n, unsigned short int len);
 void					long_nbcopy(unsigned short *dest, unsigned short *src);
 
-char					*nbtoa1(t_sme *n, char *specdot);
+char					*long_toa(t_sme *rounded, char *specdot);
 char		 			*long_round(t_sme *n, char *specdot);
 
 
