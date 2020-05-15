@@ -6,7 +6,7 @@
 /*   By: jirwin <jirwin@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/15 11:50:47 by jirwin            #+#    #+#             */
-/*   Updated: 2020/05/15 11:51:05 by jirwin           ###   ########.fr       */
+/*   Updated: 2020/05/15 14:32:08 by acyrenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,16 @@ static char		*handle_signed(t_argument *arg, va_list *args)
 static char		*handle_float(t_argument *arg, va_list *args)
 {
 	if (arg->type == F && ft_strequ(arg->modificator, "L"))
-		return (lftoa(va_arg(*args, long double), arg->afterpoint, \
+		return (lftoa(va_arg(*args, long double), arg->afterpoint,\
 																arg->special));
 	else
 		return (ftoa(va_arg(*args, double), arg->afterpoint, arg->special));
-	
 }
 
 void			handle_number(t_argument *arg, va_list *args)
 {
 	char *tmp;
+
 	if (arg->type == F)
 		arg->data = handle_float(arg, args);
 	else if (arg->type >= XS && arg->type <= U)
