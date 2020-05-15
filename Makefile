@@ -71,10 +71,10 @@ $(NAME): $(LIBFT_OBJS) $(PRINTF_OBJS)
 	ar rc $(NAME) $^
 	ranlib $(NAME)
 
-$(LIBFT_OBJS_DIR)/%.o: $(LIBFT_PATH)%.c
+$(LIBFT_OBJS_DIR)/%.o: $(LIBFT_PATH)%.c $(LIBFT_PATH)$(LIBFT_INCS)
 	$(CC) $(CFLAGS) -c $< -I $(LIBFT_PATH) -o $@
 
-$(PRINTF_OBJS_DIR)/%.o: $(PRINTF_PATH)%.c
+$(PRINTF_OBJS_DIR)/%.o: $(PRINTF_PATH)%.c $(PRINTF_INCS_DIR)/$(PRINTF_INCS)
 	$(CC) $(CFLAGS) -c $< $(addprefix -I,$(PRINTF_INCS_DIR)) -o $@
 
 $(OBJS_DIR):

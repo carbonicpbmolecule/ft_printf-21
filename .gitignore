@@ -2,7 +2,6 @@ pft/
 .objects/
 a.out
 main.c
-author
 .gitignorepft/
 libftprintf.a
 42FileChecker/
