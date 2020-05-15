@@ -1,4 +1,5 @@
 pft/
+.objects/
 a.out
 main.c
 author
