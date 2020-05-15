@@ -56,10 +56,11 @@ PRINTF_SRCS =	ft_itoa_base.c \
 				print.c\
 				undefined.c\
 				pointer.c\
-				l_ar.c\
+				float_toa.c\
 				float_helpers.c\
 				float_nan_inf.c\
-				float_operations.c
+				float_operations.c\
+				float_write_long.c
 PRINTF_OBJS = $(PRINTF_SRCS:%.c=$(PRINTF_OBJS_DIR)/%.o)
 PRINTF_OBJS_DIR = $(OBJS_DIR)
 PRINTF_INCS_DIR = inc

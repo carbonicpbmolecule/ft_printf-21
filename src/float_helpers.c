@@ -1,7 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   float_helpers.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jirwin <jirwin@student.21-school.ru>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/15 11:15:27 by jirwin            #+#    #+#             */
+/*   Updated: 2020/05/15 11:15:28 by jirwin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-int					getsize(unsigned long n) {
-	int				size;
+int		getsize(unsigned long n)
+{
+	int size;
 
 	size = 0;
 	while (n)
@@ -12,18 +25,19 @@ int					getsize(unsigned long n) {
 	return (size);
 }
 
-void 				long_nbzero(unsigned short *n, unsigned short len) {
-	int 				i;
+void	long_nbzero(unsigned short *n, unsigned short len)
+{
+	int i;
 
 	i = 0;
 	while (i < len)
 		n[i++] = 0;
 }
 
-void				long_nbcopy(unsigned short *dest, unsigned short *src)
+void	long_nbcopy(unsigned short *dest, unsigned short *src)
 {
-	int 				i;
-	int 				j;
+	int i;
+	int j;
 
 	j = 1;
 	i = 1;

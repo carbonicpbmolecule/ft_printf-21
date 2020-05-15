@@ -1,63 +1,81 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   float_operations.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jirwin <jirwin@student.21-school.ru>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/15 11:30:19 by jirwin            #+#    #+#             */
+/*   Updated: 2020/05/15 11:30:20 by jirwin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-unsigned short	*long_pow(unsigned int nb, int power)
+unsigned short			*long_pow(unsigned int nb, int power)
 {
 	unsigned short *a;
 	unsigned short *tmp;
-	unsigned short *res;
+	unsigned short *result;
 
-	res = long_write_lint(1);
+	result = long_write_lint(1);
 	if (power == 0)
-		return res;
+		return (result);
 	a = long_write_lint(nb);
-	while (power--) {
-		tmp = long_mult(res, a);
-		free(res);
-		res = tmp;
+	while (power--)
+	{
+		tmp = long_mult(result, a);
+		free(result);
+		result = tmp;
 	}
 	free(a);
-	return (res);
+	return (result);
 }
 
-unsigned short	*long_mult(unsigned short *a, unsigned short *b)
+static unsigned short	*mult(unsigned short *dest, unsigned short *a, \
+															unsigned short *b)
+{
+	int				i;
+	int				j;
+	unsigned int	cr;
+	unsigned int	k;
+
+	i = 0;
+	while (++i <= a[0])
+	{
+		j = 0;
+		while (++j <= b[0])
+		{
+			cr = a[i] * b[j];
+			k = i + j - 1;
+			dest[0] = !cr ? k++ : dest[0];
+			while (cr)
+			{
+				cr = cr + dest[k];
+				dest[k] = cr % 10;
+				cr /= 10;
+				(k > dest[0]) ? dest[0] = k++ : k++;
+			}
+		}
+	}
+	return (dest);
+}
+
+unsigned short			*long_mult(unsigned short *a, unsigned short *b)
 {
 	unsigned short rlen;
 	unsigned short *result;
-	unsigned short cr;
-	unsigned short k;
-	unsigned short i;
-	unsigned short j;
 
 	rlen = a[0] + b[0] + 1;
 	result = (unsigned short int *)malloc(sizeof(unsigned short int) * rlen);
 	if (!result)
 		exit(1);
 	long_nbzero(result, rlen);
-	i = 1;
-	while (i <= a[0])
-	{
-		j = 1;
-		while (j <= b[0])
-		{
-			cr = a[i] * b[j];
-			k = i + j - 1;
-			if (cr == 0)
-				result[0] = k++;
-			while (cr)
-			{
-				cr = cr + result[k];
-				result[k] = cr % 10;
-				cr /= 10;
-				(k > result[0]) ? result[0] = k++ : k++;
-			}
-			j++;
-		}
-		i++;
-	}
-	return (result);
+	return (mult(result, a, b));
 }
 
-unsigned short	*long_add(unsigned short *a, unsigned short *b, int *point)
+unsigned short			*long_add(unsigned short *a, unsigned short *b, \
+																int *point)
 {
 	int max;
 	int c;
@@ -70,10 +88,7 @@ unsigned short	*long_add(unsigned short *a, unsigned short *b, int *point)
 	i = 1;
 	while (i <= max)
 	{
-		if (i > b[0])
-			kd = 0;
-		else
-			kd = b[i];
+		kd = (i > b[0]) ? 0 : b[i];
 		c = c + a[i] + kd;
 		a[i] = c % 10;
 		c = c / 10;
