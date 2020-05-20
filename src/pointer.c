@@ -19,8 +19,8 @@ void		handle_pointer(t_argument *arg, va_list *args)
 	data = va_arg(*args, unsigned long long);
 	if (!data)
 	{
-		arg->data = ft_strdup("(nil)");
-		arg->special[0] = 0;
+		arg->data = ft_strdup("0");
+		ft_strcpy(arg->special, "0x");
 	}
 	else
 	{

@@ -85,11 +85,11 @@ t_argument			*arg_parse(const char *format)
 	arg->alignment = RIGHT;
 	arg->sign_display = 0;
 	arg->data = 0;
-	arg->special = ft_memalloc(2);
+	arg->special = ft_memalloc(3);
 	flags_offset = parse_flags(format, arg);
 	arg->field_size = ft_atoi(format + 1 + flags_offset);
 	arg->modificator = parse_modificator(arg, format);
 	if ((arg->type == XS || arg->type == XL) && arg->afterpoint == -1)
-		ft_bzero(arg->special, 2);
+		ft_bzero(arg->special, 3);
 	return (arg);
 }
